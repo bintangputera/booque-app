@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="handler"
+            type="com.elapp.booque.presentation.ui.account.handler.LoginHandler" />
+
+        <variable
+            name="viewmodel"
+            type="com.elapp.booque.presentation.ui.account.FormViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".presentation.ui.account.LoginFragment">
+
+        <TextView
+            android:id="@+id/tx_title_masuk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/poppins_bold"
+            android:text="@string/masuk"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tx_sub_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/yuk_masuk_akunmu_untuk_lanjut"
+            android:textColor="@color/dark_grey"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tx_title_masuk" />
+
+        <TextView
+            android:id="@+id/tx_title_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/email"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tx_sub_title" />
+
+        <EditText
+            android:id="@+id/edt_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/input_bg"
+            android:hint="@string/dummy_email"
+            android:inputType="textEmailAddress"
+            android:padding="16dp"
+            android:text="@={viewmodel.email}"
+            android:textSize="12sp"
+            app:layout_constraintTop_toBottomOf="@id/tx_title_email" />
+
+        <TextView
+            android:id="@+id/tx_title_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:text="@string/password"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edt_email" />
+
+        <EditText
+            android:id="@+id/edt_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/input_bg"
+            android:hint="@string/masukkan_password_kamu"
+            android:inputType="textPassword"
+            android:padding="16dp"
+            android:text="@={viewmodel.password}"
+            android:textSize="12sp"
+            app:layout_constraintTop_toBottomOf="@id/tx_title_password" />
+
+        <Button
+            android:id="@+id/btn_login"
+            style="@style/DarkButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/btn_background_purple"
+            android:elevation="0dp"
+            android:onClick="@{(v) -> handler.onLoginClicked(v) }"
+            android:padding="12dp"
+            android:text="@string/masuk"
+            android:textAllCaps="false"
+            android:textSize="16sp"
+            app:layout_constraintTop_toBottomOf="@id/edt_password" />
+
+        <LinearLayout
+            android:id="@+id/layout_section"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintTop_toBottomOf="@id/btn_login">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_gravity="center"
+                android:layout_marginEnd="24dp"
+                android:layout_weight="1"
+                android:background="@color/light_grey" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/atau_login_dengan" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="24dp"
+                android:layout_weight="1"
+                android:background="@color/light_grey" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_login_google"
+            style="@style/LightButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/google_button_register_bg"
+            android:contentDescription="@string/logo_gmail_untuk_button"
+            android:elevation="0dp"
+            android:onClick="@{(v) -> handler.onGoogleButtonClicked(v) }"
+            android:padding="12dp"
+            android:text="@string/login_dengan_google"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            app:backgroundTint="@null"
+            app:layout_constraintTop_toBottomOf="@id/layout_section" />
+
+        <TextView
+            android:id="@+id/tx_konfirm_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            android:text="@string/belum_punya_akun_daftar"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_login_google" />
+
+        <View
+            android:id="@+id/background_dim"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:background="#4B131313" />
+
+        <ProgressBar
+            android:id="@+id/progress_login"
+            android:layout_width="50dp"
+            android:layout_height="fill_parent"
+            android:visibility="gone"
+            android:layout_gravity="center_vertical|center_horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

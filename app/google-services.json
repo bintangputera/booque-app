@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "247420674016",
+    "project_id": "booqueapp-1617900472671",
+    "storage_bucket": "booqueapp-1617900472671.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:247420674016:android:46c7cdddf20237808f1585",
+        "android_client_info": {
+          "package_name": "com.elapp.booque"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "247420674016-0v6su528l9el7lgtheoeep4pn1gb1coq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.elapp.booque",
+            "certificate_hash": "8521a5c4ecd2c119e52636650fa7fb4c2241a045"
+          }
+        },
+        {
+          "client_id": "247420674016-g4acmno4vbcso0a9t5cic48ssqkjs6i2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4Sh-r_z-yCbSBWA358g3vwe40gjsnSb0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "247420674016-g4acmno4vbcso0a9t5cic48ssqkjs6i2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

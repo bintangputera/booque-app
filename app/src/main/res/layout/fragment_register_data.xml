@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="handler"
+            type="com.elapp.booque.presentation.ui.account.handler.RegisterHandler" />
+
+        <variable
+            name="viewmodel"
+            type="com.elapp.booque.presentation.ui.account.RegisterViewModel" />
+
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".presentation.ui.account.RegisterDataFragment">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:text="@string/email" />
+
+            <EditText
+                android:id="@+id/edt_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/input_bg"
+                android:hint="@string/dummy_email"
+                android:inputType="textEmailAddress"
+                android:padding="16dp"
+                android:text="@{viewmodel.email}"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:text="@string/nama_lengkap" />
+
+            <EditText
+                android:id="@+id/edt_nama"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/input_bg"
+                android:hint="@string/dummy_nama_lengkap"
+                android:inputType="text"
+                android:padding="16dp"
+                android:text="@{viewmodel.nama}"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:text="@string/password" />
+
+            <EditText
+                android:id="@+id/edt_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/input_bg"
+                android:hint="@string/minimal_8_karakter_beserta_angka"
+                android:inputType="textPassword"
+                android:padding="16dp"
+                android:text="@={viewmodel.password}"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:text="@string/dengan_membuat_akun_berarti_kamu_setuju_dengan_ketentuan_layanan_booque"
+                android:textColor="@color/black" />
+
+            <Button
+                android:id="@+id/btn_buat_akun"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:padding="16dp"
+                style="@style/DarkButtonStyle"
+                android:background="@drawable/btn_background_purple"
+                android:textSize="16sp"
+                android:text="@string/buat_akun" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</layout>

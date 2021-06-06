@@ -7,4 +7,27 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="dark_grey">#626262</color>
+    <color name="light_grey">#D2D2D2</color>
+
+    <color name="blue_light">#4196D1</color>
+    <color name="primary_blue_purple">#22319E</color>
+
+    <color name="hint_color">#DADADA</color>
+    <color name="input_bg_border_color">#F5F5F5</color>
+
+    <!-- colors for button style -->
+    <color name="gradient_start_color">#4c84ff</color>
+    <color name="gradient_end_color">#18a3fe</color>
+
+    <!-- Category -->
+    <color name="category_list_background_color">#CAE5F8</color>
+    <color name="category_title_color">#005CC9</color>
+
+    <!-- colors for tab and screent text -->
+
+    <color name="tab_indicator_gray">#c0c0c0</color>
+    <color name="intro_title_color">#0D0F44</color>
+    <color name="intro_description_color">#656565</color>
+
 </resources>

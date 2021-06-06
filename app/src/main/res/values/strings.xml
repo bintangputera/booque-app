@@ -1,3 +1,52 @@
 <resources>
     <string name="app_name">Booque</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="home">Home</string>
+    <string name="profil">Profil</string>
+    <string name="buku">Buku</string>
+    <string name="home_fragment">Home Fragment</string>
+    <string name="profile_fragment">Profile Fragment</string>
+    <string name="yuk_lanjut">Yuk Lanjut</string>
+    <string name="booque">booque</string>
+    <string name="logo_booque">logo booque</string>
+    <string name="selamat_datang">Selamat Datang</string>
+    <string name="welcome_desc">Mari bergabung dengan komunitas Booque, berbagi buku bekas, dan berkontribusi dalam pengurangan penumpukan buku bekas</string>
+    <string name="mulai_sekarang">Mulai Sekarang</string>
+    <string name="bergabung_dengan_komunitas_booque_dan_berkontribusi">Bergabung dengan komunitas Booque dan berkontribusi</string>
+    <string name="daftar_dengan">Daftar dengan</string>
+    <string name="atau">atau</string>
+    <string name="logo_gmail_untuk_button">logo gmail untuk button</string>
+    <string name="nama_lengkap">Nama Lengkap</string>
+    <string name="dummy_nama_lengkap">Contoh : Bagas Permana</string>
+    <string name="dengan_membuat_akun_berarti_kamu_setuju_dengan_ketentuan_layanan_booque">Dengan membuat akun berarti kamu setuju dengan <b><u>Ketentuan Layanan</u></b> Booque</string>
+    <string name="buat_akun">Buat Akun</string>
+    <string name="udah_daftar_login_disini"><u>Udah Daftar ? Login Disini</u></string>
+    <string name="email">Email</string>
+    <string name="dummy_email">Contoh : bagaspramana17@gmail.com</string>
+    <string name="minimal_8_karakter_beserta_angka">Minimal 8 karakter beserta angka</string>
+    <string name="yuk_masuk_akunmu_untuk_lanjut">Yuk masuk akunmu untuk lanjut</string>
+    <string name="masukkan_password_kamu">Masukkan password kamu</string>
+    <string name="belum_punya_akun_daftar"><u>Belum punya akun ? Daftar</u></string>
+    <string name="masuk">Masuk</string>
+    <string name="login_dengan">Login dengan</string>
+    <string name="password">Password</string>
+    <string name="lanjut">Lanjut</string>
+    <string name="daftar_dengan_google">Daftar dengan Google</string>
+    <string name="login_dengan_google">Login dengan Google</string>
+
+    <!--  Valued String  -->
+    <string name="welcome_title">Hai %1$s,</string>
+    <string name="yuk_masuk">Yuk Masuk</string>
+    <string name="category">Category</string>
+    <string name="buku_disekitarmu">Buku disekitarmu</string>
+    <string name="lihat_selengkapnya">Lihat selengkapnya</string>
+    <string name="dummy_category">Komik</string>
+    <string name="komik_naruto_vol_6_9">Komik Naruto Vol 6-9</string>
+    <string name="bondowoso_jawa_timur">Bondowoso, Jawa Timur</string>
+    <string name="atau_login_dengan">atau login dengan</string>
+    <string name="daftar">Daftar</string>
+    <string name="atau_daftar_dengan">atau daftar dengan</string>
+    <string name="logout">Logout</string>
+
 </resources>

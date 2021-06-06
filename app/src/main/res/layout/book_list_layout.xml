@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/book_thumbnail_background"
+    android:layout_margin="16dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/img_book_thumbnail"
+            android:background="@color/dark_grey"
+            android:layout_width="match_parent"
+            android:layout_height="130dp"/>
+
+        <TextView
+            android:id="@+id/tx_category_title"
+            android:text="@string/dummy_category"
+            android:textColor="@color/category_title_color"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="16dp"
+            android:fontFamily="@font/poppins_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/tx_book_title"
+            android:text="@string/komik_naruto_vol_6_9"
+            android:textColor="@color/black"
+            android:layout_marginStart="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/tx_location"
+            android:text="@string/bondowoso_jawa_timur"
+            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="16dp"
+            app:drawableTint="@color/light_grey"
+            app:drawableStartCompat="@drawable/ic_baseline_location" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
