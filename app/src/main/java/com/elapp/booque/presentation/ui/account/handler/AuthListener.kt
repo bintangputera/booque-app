@@ -6,6 +6,6 @@ import com.elapp.booque.data.entity.login.User
 
 interface AuthListener {
     fun onAuthenticating()
-    fun onSuccess(credential: Credential, response: LiveData<User>)
+    fun onSuccess(email: String, password: String, response: LiveData<User>)
     fun onFailure(message: String)
 }

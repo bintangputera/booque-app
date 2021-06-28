@@ -25,7 +25,7 @@ class BannerFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        var url = arguments?.getString("img")
+        val url = arguments?.getString("img")
 
         url.let {
             Picasso.get().load(url).into(binding?.imgBanner)

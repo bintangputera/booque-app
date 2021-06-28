@@ -32,13 +32,9 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         sharedPreferences = activity?.getSharedPreferences(USER_PREFS_NAME, Context.MODE_PRIVATE)!!
-
-        binding?.btnLogout?.setOnClickListener {
-            openLogoutDialog() 
-        }
     }
 
-    private fun openLogoutDialog() {
+    /*private fun openLogoutDialog() {
         val alertDialog = this.context?.let { AlertDialog.Builder(it) }
         alertDialog?.setTitle("Logout?")
             ?.setPositiveButton(
@@ -55,7 +51,7 @@ class ProfileFragment : Fragment() {
         val intent = Intent(this.context, FormActivity::class.java)
         activity?.finish()
         startActivity(intent)
-    }
+    }*/
 
     override fun onDestroyView() {
         super.onDestroyView()

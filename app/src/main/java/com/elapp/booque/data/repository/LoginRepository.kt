@@ -12,20 +12,20 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
-import javax.inject.Inject
 
-class LoginRepository @Inject constructor(private val accountService: AccountService) {
+class LoginRepository (private val accountService: AccountService) {
 
     var networkState: GlobalEventHandler<NetworkState> = GlobalEventHandler()
     private val resultUser = MutableLiveData<User>()
 
     fun requestLogin(
-        credential: Credential,
+        email: String,
+        password: String,
         compositeDisposable: CompositeDisposable
     ): LiveData<User> {
         Timber.d("Loading to request login")
         compositeDisposable.add(
-            accountService.loginRequest(credential)
+            accountService.loginRequest(email, password)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(

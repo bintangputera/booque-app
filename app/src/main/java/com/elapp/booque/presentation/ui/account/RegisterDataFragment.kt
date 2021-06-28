@@ -13,6 +13,7 @@ import com.elapp.booque.MainActivity
 import com.elapp.booque.data.entity.Credential
 import com.elapp.booque.data.entity.login.User
 import com.elapp.booque.databinding.FragmentRegisterDataBinding
+import com.elapp.booque.presentation.ui.account.handler.RegisterHandler
 import com.elapp.booque.presentation.ui.account.handler.RegisterListener
 import com.elapp.booque.utils.global.SessionManager
 import com.elapp.booque.utils.network.NetworkState
@@ -21,7 +22,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import timber.log.Timber
 
-class RegisterDataFragment : Fragment(), RegisterListener {
+class RegisterDataFragment : Fragment(), RegisterListener, RegisterHandler {
 
     private var _fragmentRegisterDataBinding: FragmentRegisterDataBinding? = null
     private val binding get() = _fragmentRegisterDataBinding
@@ -50,20 +51,9 @@ class RegisterDataFragment : Fragment(), RegisterListener {
         registerViewModel = (activity as FormActivity).registerViewModel
 
         binding?.viewmodel = registerViewModel
+        binding?.handler = this
 
         getData()
-
-        binding?.btnBuatAkun?.setOnClickListener {
-            registerViewModel.registerRequest("oauth")
-
-            registerViewModel.networkState.observe(viewLifecycleOwner, Observer {
-                when (it) {
-                    NetworkState.LOADING -> Toast.makeText(context?.applicationContext, "Proses Register", Toast.LENGTH_SHORT).show()
-
-                    NetworkState.LOADED -> Toast.makeText(context?.applicationContext, "Register Berhasil", Toast.LENGTH_SHORT).show()
-                }
-            })
-        }
 
     }
 
@@ -103,6 +93,22 @@ class RegisterDataFragment : Fragment(), RegisterListener {
 
     override fun onFailure(message: String) {
         Toast.makeText(context?.applicationContext, message, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onRegisterClicked(view: View) {
+        Toast.makeText(context?.applicationContext, "Button ditekan", Toast.LENGTH_SHORT).show()
+        registerViewModel.registerRequest("oauth")
+        registerViewModel.networkState.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                NetworkState.LOADING -> Toast.makeText(context?.applicationContext, "Proses Register", Toast.LENGTH_SHORT).show()
+
+                NetworkState.LOADED -> Toast.makeText(context?.applicationContext, "Register Berhasil", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+    override fun onGoogleButtonClicked(view: View) {
+        /* Nothing to do */
     }
 
 }

@@ -16,15 +16,15 @@
         <activity android:name=".presentation.ui.account.FormActivity"/>
         <activity android:name=".presentation.ui.article.ArticleWebViewActivity"/>
         <activity android:name=".presentation.ui.onboarding.OnBoardingActivity" />
-        <activity android:name=".presentation.ui.splash.SplashActivity">
+        <activity android:name=".presentation.ui.splash.SplashActivity"/>
+        <activity android:name=".presentation.ui.appintro.IntroActivity" />
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".presentation.ui.appintro.IntroActivity" />
-        <activity android:name=".MainActivity"/>
 
         <meta-data
             android:name="preloaded_fonts"

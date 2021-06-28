@@ -18,8 +18,10 @@ interface AccountService {
     ): Observable<ResponseUser>
 
    @POST("api/login")
+   @FormUrlEncoded
    fun loginRequest(
-       @Body request: Credential
+       @Field("email") email: String,
+       @Field("password") password: String
    ): Observable<ResponseUser>
 
    @POST("api/daftar")

@@ -1,18 +1,14 @@
 package com.elapp.booque.presentation.ui.account
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.elapp.booque.databinding.ActivityFormBinding
-import com.elapp.booque.utils.global.factory.FormViewModelFactory
-import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
+import com.elapp.booque.utils.global.factory.ViewModelFactory
 
-@AndroidEntryPoint
 class FormActivity : AppCompatActivity() {
 
-    @Inject
-    lateinit var factoryForm: FormViewModelFactory
+    lateinit var factory: ViewModelFactory
 
     lateinit var viewModel: FormViewModel
     lateinit var registerViewModel: RegisterViewModel
@@ -25,8 +21,7 @@ class FormActivity : AppCompatActivity() {
         _formActivityBinding = ActivityFormBinding.inflate(layoutInflater)
         setContentView(_formActivityBinding?.root)
 
-        viewModel = ViewModelProvider(this, factoryForm).get(FormViewModel::class.java)
-        registerViewModel = ViewModelProvider(this, factoryForm).get(RegisterViewModel::class.java)
-
+        viewModel = ViewModelProvider(this, factory).get(FormViewModel::class.java)
+        registerViewModel = ViewModelProvider(this, factory).get(RegisterViewModel::class.java)
     }
 }

@@ -17,7 +17,6 @@
     <string name="daftar_dengan">Daftar dengan</string>
     <string name="atau">atau</string>
     <string name="logo_gmail_untuk_button">logo gmail untuk button</string>
-    <string name="nama_lengkap">Nama Lengkap</string>
     <string name="dummy_nama_lengkap">Contoh : Bagas Permana</string>
     <string name="dengan_membuat_akun_berarti_kamu_setuju_dengan_ketentuan_layanan_booque">Dengan membuat akun berarti kamu setuju dengan <b><u>Ketentuan Layanan</u></b> Booque</string>
     <string name="buat_akun">Buat Akun</string>
@@ -48,5 +47,7 @@
     <string name="daftar">Daftar</string>
     <string name="atau_daftar_dengan">atau daftar dengan</string>
     <string name="logout">Logout</string>
+    <string name="photo_milik_user">Photo milik user</string>
+    <string name="nama_lengkap">Nama Lengkap</string>
 
 </resources>

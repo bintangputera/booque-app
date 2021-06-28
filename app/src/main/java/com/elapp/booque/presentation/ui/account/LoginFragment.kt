@@ -1,8 +1,7 @@
-
 package com.elapp.booque.presentation.ui.account
 
 import android.content.Intent
-import android.content.SharedPreferences
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -27,10 +26,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
-import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
-@AndroidEntryPoint
 class LoginFragment : Fragment(), LoginHandler, AuthListener {
 
     private var _fragmentLoginBinding: FragmentLoginBinding? = null
@@ -60,7 +57,6 @@ class LoginFragment : Fragment(), LoginHandler, AuthListener {
         }
 
         binding?.handler = this
-        binding?.viewmodel = formViewModel
         formViewModel.auth = this
 
         initView()
@@ -73,7 +69,7 @@ class LoginFragment : Fragment(), LoginHandler, AuthListener {
             .requestEmail()
             .build()
         mGoogleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
-        }
+    }
 
     private fun signInGoogle() {
         val intent = mGoogleSignInClient.signInIntent
@@ -92,6 +88,8 @@ class LoginFragment : Fragment(), LoginHandler, AuthListener {
         try {
             val acc: GoogleSignInAccount? = completedTask.getResult(ApiException::class.java)
             val email: String = acc?.email.toString()
+            val photo: Uri? = acc?.photoUrl
+            Timber.d("url user : $photo")
             formViewModel.oauthLogin(email)
             formViewModel.loginNetworkState.observe(viewLifecycleOwner, Observer {
                 when (it) {
@@ -117,7 +115,7 @@ class LoginFragment : Fragment(), LoginHandler, AuthListener {
     }
 
     override fun onLoginClicked(view: View) {
-        formViewModel.loginRequest()
+//        formViewModel.loginRequest()
         formViewModel.loginNetworkState.observe(viewLifecycleOwner, Observer {
             when (it) {
                 NetworkState.LOADING -> {
@@ -146,7 +144,11 @@ class LoginFragment : Fragment(), LoginHandler, AuthListener {
         Timber.d("Login authenticating")
     }
 
-    override fun onSuccess(credential: Credential, response: LiveData<User>) {
+    override fun onSuccess(email: String, password: String, response: LiveData<User>) {
+        TODO("Not yet implemented")
+    }
+
+    /*override fun onSuccess(credential: Credential, response: LiveData<User>) {
         Timber.d("Login success")
         response.observe(this, Observer {
             context?.applicationContext?.let { con ->
@@ -157,7 +159,7 @@ class LoginFragment : Fragment(), LoginHandler, AuthListener {
                 Timber.d("Activity finished")
             }
         })
-    }
+    }*/
 
     override fun onFailure(message: String) {
         Toast.makeText(context?.applicationContext, message, Toast.LENGTH_SHORT).show()

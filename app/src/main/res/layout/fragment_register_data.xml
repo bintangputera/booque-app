@@ -100,6 +100,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:padding="16dp"
+                android:onClick="@{(v) -> handler.onRegisterClicked(v) }"
                 style="@style/DarkButtonStyle"
                 android:background="@drawable/btn_background_purple"
                 android:textSize="16sp"

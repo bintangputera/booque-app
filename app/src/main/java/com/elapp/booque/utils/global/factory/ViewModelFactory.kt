@@ -2,14 +2,17 @@ package com.elapp.booque.utils.global.factory
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.elapp.booque.data.repository.BookRepository
 import com.elapp.booque.data.repository.LoginRepository
 import com.elapp.booque.presentation.ui.account.FormViewModel
 import com.elapp.booque.presentation.ui.account.RegisterViewModel
+import com.elapp.booque.presentation.ui.book.BookViewModel
 import io.reactivex.disposables.CompositeDisposable
 
 @Suppress("UNCHECKED_CAST")
-class FormViewModelFactory(
+class ViewModelFactory(
     private val loginRepository: LoginRepository,
+    private val bookRepository: BookRepository,
     private val compositeDisposable: CompositeDisposable
 ) : ViewModelProvider.NewInstanceFactory() {
 
