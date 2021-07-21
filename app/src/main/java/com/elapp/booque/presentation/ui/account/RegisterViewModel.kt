@@ -10,38 +10,30 @@ import io.reactivex.disposables.CompositeDisposable
 import timber.log.Timber
 
 class RegisterViewModel(
-    private val loginRepository: LoginRepository
+    private val loginRepository: LoginRepository,
+    private val compositeDisposable: CompositeDisposable
 ) : ViewModel() {
-
-    private val compositeDisposable: CompositeDisposable = CompositeDisposable()
-
-    var nama: String? = null
-    var email: String? = null
-    var password: String? = null
 
     var auth : RegisterListener? = null
 
     fun registerRequest(
+        email: String,
+        password: String,
+        nama: String,
         type: String
     ) {
-        if (email.isNullOrEmpty() || password.isNullOrEmpty() || nama.isNullOrEmpty()) {
+        if (email.isEmpty() || password.isEmpty() || nama.isEmpty()) {
             auth?.onFailure("Masih ada data yang kosong")
             return
         } else {
             val registerResult = loginRepository.registerRequest(
-                nama!!,
-                getCredential(),
+                nama,
+                email,
+                password,
                 type,
                 compositeDisposable)
-            auth?.onSuccess(getCredential(), registerResult)
+            auth?.onSuccess("Register Berhasil, Silahkan login")
         }
-    }
-
-    fun getCredential(): Credential {
-        return Credential(
-            email!!,
-            password
-        )
     }
 
     val networkState: LiveData<NetworkState> by lazy {

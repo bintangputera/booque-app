@@ -20,4 +20,14 @@
         android:name="com.elapp.booque.presentation.ui.book.BookFragment"
         android:label="fragment_book"
         tools:layout="@layout/fragment_book" />
+    <fragment
+        android:id="@+id/blogFragment"
+        android:name="com.elapp.booque.presentation.ui.article.BlogFragment"
+        android:label="fragment_blog"
+        tools:layout="@layout/fragment_blog"/>
+    <fragment
+        android:id="@+id/addBookFragment"
+        android:name="com.elapp.booque.presentation.ui.book.add.AddBookFragment"
+        android:label="AddBookFragment"
+        tools:layout="@layout/fragment_add_book"/>
 </navigation>

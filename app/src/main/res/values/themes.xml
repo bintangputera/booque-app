@@ -17,6 +17,23 @@
         <item name="android:textColorHint">#C8C8C8</item>
         <!-- Customize your theme here. -->
     </style>
+    
+    <style name="Theme.Booque.ActionBar" parent="Theme.MaterialComponents.Light.DarkActionBar">
+        <item name="colorPrimary">@color/blue_light</item>
+        <item name="colorPrimaryVariant">@color/primary_blue_purple</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorSecondaryVariant">@color/teal_700</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <!-- Customize your theme here. -->
+
+        <item name="fontFamily">@font/poppins</item>
+    </style>
+    
+    <!--  Component Style  -->
     <style name="TextViewStyle" parent="android:Widget.TextView">
         <item name="android:fontFamily">@font/poppins</item>
     </style>

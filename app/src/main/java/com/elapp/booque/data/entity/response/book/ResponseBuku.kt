@@ -3,5 +3,7 @@ package com.elapp.booque.data.entity.response.book
 import com.elapp.booque.data.entity.book.Book
 
 data class ResponseBuku(
-    var result: List<Book>
+    val error: String,
+    val msg: String,
+    var data: List<Book>
 )

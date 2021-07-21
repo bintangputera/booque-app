@@ -19,7 +19,7 @@ class ArticleWebViewActivity: AppCompatActivity() {
         binding?.wvArticle?.apply {
             webViewClient = WebViewClient()
             if (url != null) {
-                loadUrl("https://blog.bibit.id/blog-1/promo-april-2021-minggu-pertama-ramadan-tetap-ada-cuan")
+                loadUrl(url)
             }
         }
     }

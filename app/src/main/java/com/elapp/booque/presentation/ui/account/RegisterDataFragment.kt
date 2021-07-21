@@ -1,26 +1,21 @@
 package com.elapp.booque.presentation.ui.account
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
-import com.elapp.booque.MainActivity
-import com.elapp.booque.data.entity.Credential
-import com.elapp.booque.data.entity.login.User
+import androidx.lifecycle.ViewModelProvider
 import com.elapp.booque.databinding.FragmentRegisterDataBinding
 import com.elapp.booque.presentation.ui.account.handler.RegisterHandler
 import com.elapp.booque.presentation.ui.account.handler.RegisterListener
-import com.elapp.booque.utils.global.SessionManager
+import com.elapp.booque.utils.global.factory.ViewModelFactory
 import com.elapp.booque.utils.network.NetworkState
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import timber.log.Timber
 
 class RegisterDataFragment : Fragment(), RegisterListener, RegisterHandler {
 
@@ -29,7 +24,10 @@ class RegisterDataFragment : Fragment(), RegisterListener, RegisterHandler {
 
     private var mGoogleSignInAccount: GoogleSignInClient? = null
 
-    private lateinit var registerViewModel: RegisterViewModel
+    private val registerViewModel by lazy {
+        val factory = ViewModelFactory.getInstance()
+        ViewModelProvider(this, factory).get(RegisterViewModel::class.java)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,10 +46,8 @@ class RegisterDataFragment : Fragment(), RegisterListener, RegisterHandler {
             .build()
         mGoogleSignInAccount = GoogleSignIn.getClient(requireActivity(), gso)
 
-        registerViewModel = (activity as FormActivity).registerViewModel
-
-        binding?.viewmodel = registerViewModel
         binding?.handler = this
+        registerViewModel.auth = this
 
         getData()
 
@@ -60,36 +56,24 @@ class RegisterDataFragment : Fragment(), RegisterListener, RegisterHandler {
     private fun getData() {
         val email = arguments?.getString("email")
         val nama = arguments?.getString("nama_lengkap")
-        registerViewModel.nama = nama
-        registerViewModel.email = email
+        binding?.edtEmail?.setText(email.toString())
+        binding?.edtNama?.setText(nama.toString())
     }
 
     private fun signOut() {
         mGoogleSignInAccount?.signOut()
     }
 
-    private fun clearInput(){
-        registerViewModel.nama = null
-        registerViewModel.email = null
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()
         signOut()
-        clearInput()
     }
 
-    override fun onSuccess(credential: Credential, response: LiveData<User>) {
-        Timber.d("Register success")
-        response.observe(this, Observer {
-            context?.applicationContext?.let { con ->
-                SessionManager(con).saveOAuth(it,credential)
-                val intent = Intent(context?.applicationContext, MainActivity::class.java)
-                startActivity(intent)
-                activity?.finish()
-            }
-        })
+    override fun onSuccess(message: String) {
+        Toast.makeText(context?.applicationContext, message, Toast.LENGTH_SHORT).show()
     }
+
 
     override fun onFailure(message: String) {
         Toast.makeText(context?.applicationContext, message, Toast.LENGTH_SHORT).show()
@@ -97,7 +81,12 @@ class RegisterDataFragment : Fragment(), RegisterListener, RegisterHandler {
 
     override fun onRegisterClicked(view: View) {
         Toast.makeText(context?.applicationContext, "Button ditekan", Toast.LENGTH_SHORT).show()
-        registerViewModel.registerRequest("oauth")
+        registerViewModel.registerRequest(
+            binding?.edtEmail?.text.toString(),
+            binding?.edtPassword?.text.toString(),
+            binding?.edtNama?.text.toString(),
+            "oauth"
+        )
         registerViewModel.networkState.observe(viewLifecycleOwner, Observer {
             when (it) {
                 NetworkState.LOADING -> Toast.makeText(context?.applicationContext, "Proses Register", Toast.LENGTH_SHORT).show()

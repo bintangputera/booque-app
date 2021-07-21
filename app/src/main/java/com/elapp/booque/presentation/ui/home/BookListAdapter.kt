@@ -2,12 +2,28 @@ package com.elapp.booque.presentation.ui.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.elapp.booque.data.entity.book.Book
 import com.elapp.booque.databinding.BookListLayoutBinding
 import com.squareup.picasso.Picasso
 
-class BookListAdapter(private var mList: List<Book>): RecyclerView.Adapter<BookListAdapter.BookViewHolder>() {
+class BookListAdapter: PagingDataAdapter<Book, BookListAdapter.BookViewHolder>(DIFF_CALLBACK) {
+
+    companion object {
+        private val DIFF_CALLBACK: DiffUtil.ItemCallback<Book> = object :
+            DiffUtil.ItemCallback<Book>() {
+            override fun areItemsTheSame(oldItem: Book, newItem: Book): Boolean {
+                return oldItem.id == newItem.id && oldItem.id == newItem.id
+            }
+
+            override fun areContentsTheSame(oldItem: Book, newItem: Book): Boolean {
+                return oldItem.id == newItem.id
+            }
+
+        }
+    }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -20,7 +36,9 @@ class BookListAdapter(private var mList: List<Book>): RecyclerView.Adapter<BookL
     override fun getItemCount(): Int = 5
 
     override fun onBindViewHolder(holder: BookListAdapter.BookViewHolder, position: Int) {
-        holder.bind(mList[position])
+        getItem(position)?.let {
+            holder.bind(it)
+        }
     }
 
     inner class BookViewHolder(val binding: BookListLayoutBinding): RecyclerView.ViewHolder(binding.root) {

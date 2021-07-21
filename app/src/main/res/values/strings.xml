@@ -37,7 +37,6 @@
     <!--  Valued String  -->
     <string name="welcome_title">Hai %1$s,</string>
     <string name="yuk_masuk">Yuk Masuk</string>
-    <string name="category">Category</string>
     <string name="buku_disekitarmu">Buku disekitarmu</string>
     <string name="lihat_selengkapnya">Lihat selengkapnya</string>
     <string name="dummy_category">Komik</string>
@@ -49,5 +48,44 @@
     <string name="logout">Logout</string>
     <string name="photo_milik_user">Photo milik user</string>
     <string name="nama_lengkap">Nama Lengkap</string>
+    <string name="riwayat">Riwayat</string>
+    <string name="add">Add</string>
+    <string name="book_title">Book Title</string>
+    <string name="kategori">Kategori</string>
+    <string name="deskripsi">Deskripsi</string>
+    <string name="tambahkan_foto">Tambahkan Foto</string>
+    <string name="tambahkan_foto_buku">Tambahkan foto buku</string>
+    <string name="contoh_buku_komik_buku_matematika">contoh : Buku komik, buku matematika</string>
+    <string name="nama_buku">Nama Buku</string>
+    <string name="submit">Submit</string>
+    <string name="alamat">Alamat</string>
+    <string name="contoh_jalan_soekarno_hatta_no_34">contoh: Jalan Soekarno Hatta No. 34</string>
+    <string name="penulis">Penulis</string>
+    <string name="penerbit">Penerbit</string>
+    <string name="contoh_2012_2015_2020">contoh : 2012, 2015, 2020</string>
+    <string name="contoh_erlangga_gramedia">contoh: Erlangga, Gramedia</string>
+    <string name="akun_saya">Akun Saya</string>
+    <string name="daftar_buku_saya">Daftar Buku Saya</string>
+    <string name="faq">FAQ</string>
+    <string name="bantuan">Bantuan</string>
+    <string name="hint_name">Contoh : Dani Hidayat</string>
+    <string name="hint_email">contoh : user@gmail.com</string>
+    <string name="no_telepon">No Telepon</string>
+    <string name="masukkan_no_telepon_anda">Masukkan no telepon anda</string>
+    <string name="masukkan_alamat_anda">Masukkan alamat anda</string>
+    <string name="kota">Kota</string>
+    <string name="pilih_kota_anda">Pilih kota anda</string>
+    <string name="simpan_perubahan">Simpan Perubahan</string>
+    <string name="provinsi">Provinsi</string>
+    <string name="province_name">Province Name</string>
+    <string name="blog_title">Blog Title</string>
+    <string name="category">Category</string>
+    <string name="blog">Blog</string>
+    <string-array name="category_list">
+        <item>Komik</item>
+        <item>Novel</item>
+        <item>Buku Pelajaran</item>
+        <item>Majalah</item>
+    </string-array>
 
 </resources>

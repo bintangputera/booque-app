@@ -9,9 +9,6 @@
             name="handler"
             type="com.elapp.booque.presentation.ui.account.handler.RegisterHandler" />
 
-        <variable
-            name="viewmodel"
-            type="com.elapp.booque.presentation.ui.account.RegisterViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -59,7 +56,6 @@
             android:hint="@string/dummy_email"
             android:inputType="text"
             android:padding="16dp"
-            android:text="@={viewmodel.nama}"
             android:textSize="12sp" />
 
         <TextView
@@ -85,7 +81,6 @@
             android:hint="@string/dummy_email"
             android:inputType="textEmailAddress"
             android:padding="16dp"
-            android:text="@={viewmodel.email}"
             android:textSize="12sp" />
 
         <TextView
@@ -108,7 +103,6 @@
             android:hint="@string/masukkan_password_kamu"
             android:inputType="textPassword"
             android:padding="16dp"
-            android:text="@={viewmodel.password}"
             android:textSize="12sp" />
 
         <TextView

@@ -8,8 +8,6 @@ import com.elapp.booque.utils.global.factory.ViewModelFactory
 
 class FormActivity : AppCompatActivity() {
 
-    lateinit var factory: ViewModelFactory
-
     lateinit var viewModel: FormViewModel
     lateinit var registerViewModel: RegisterViewModel
 
@@ -20,8 +18,5 @@ class FormActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         _formActivityBinding = ActivityFormBinding.inflate(layoutInflater)
         setContentView(_formActivityBinding?.root)
-
-        viewModel = ViewModelProvider(this, factory).get(FormViewModel::class.java)
-        registerViewModel = ViewModelProvider(this, factory).get(RegisterViewModel::class.java)
     }
 }

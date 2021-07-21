@@ -9,6 +9,14 @@
         android:icon="@drawable/ic_book_icon"
         android:title="@string/buku"/>
     <item
+        android:id="@+id/addBookFragment"
+        android:icon="@drawable/ic_add"
+        android:title="@string/add"/>
+    <item
+        android:title="@string/blog"
+        android:id="@+id/blogFragment"
+        android:icon="@drawable/ic_article"/>
+    <item
         android:id="@+id/profileFragment"
         android:icon="@drawable/ic_user_icon"
         android:title="@string/profil"/>

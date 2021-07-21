@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.elapp.booque.MainActivity
 import com.elapp.booque.R
@@ -19,6 +20,7 @@ import com.elapp.booque.databinding.FragmentLoginBinding
 import com.elapp.booque.presentation.ui.account.handler.AuthListener
 import com.elapp.booque.presentation.ui.account.handler.LoginHandler
 import com.elapp.booque.utils.global.SessionManager
+import com.elapp.booque.utils.global.factory.ViewModelFactory
 import com.elapp.booque.utils.network.NetworkState
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -35,7 +37,10 @@ class LoginFragment : Fragment(), LoginHandler, AuthListener {
 
     private lateinit var mGoogleSignInClient: GoogleSignInClient
 
-    private lateinit var formViewModel: FormViewModel
+    private val formViewModel by lazy {
+        val factory = ViewModelFactory.getInstance()
+        ViewModelProvider(this, factory).get(FormViewModel::class.java)
+    }
 
     private val RC_SIGN_IN = 1
 
@@ -50,7 +55,6 @@ class LoginFragment : Fragment(), LoginHandler, AuthListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        formViewModel = (activity as FormActivity).viewModel
 
         binding?.txKonfirmRegister?.setOnClickListener {
             it.findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
@@ -115,7 +119,7 @@ class LoginFragment : Fragment(), LoginHandler, AuthListener {
     }
 
     override fun onLoginClicked(view: View) {
-//        formViewModel.loginRequest()
+        formViewModel.loginRequest(binding?.edtEmail?.text.toString(), binding?.edtPassword?.text.toString())
         formViewModel.loginNetworkState.observe(viewLifecycleOwner, Observer {
             when (it) {
                 NetworkState.LOADING -> {
@@ -145,7 +149,16 @@ class LoginFragment : Fragment(), LoginHandler, AuthListener {
     }
 
     override fun onSuccess(email: String, password: String, response: LiveData<User>) {
-        TODO("Not yet implemented")
+        Timber.d("Login success")
+        response.observe(this, Observer {
+            context?.applicationContext?.let { con ->
+                SessionManager(con).saveOAuth(it, email)
+                val intent = Intent(context?.applicationContext, MainActivity::class.java)
+                startActivity(intent)
+                requireActivity().finish()
+                Timber.d("Activity finished")
+            }
+        })
     }
 
     /*override fun onSuccess(credential: Credential, response: LiveData<User>) {

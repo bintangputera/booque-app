@@ -18,10 +18,10 @@ class SessionManager(context: Context) {
     private var prefs: SharedPreferences = context.applicationContext.getSharedPreferences(USER_PREFS_NAME, Context.MODE_PRIVATE)
 
     /*Function save user data to shared preferences*/
-    fun saveOAuth(user: User, credential: Credential) {
+    fun saveOAuth(user: User, email: String) {
         val editor = prefs.edit()
-        editor.putString(KEY_USER_ID, user.userId.toString())
-        editor.putString(KEY_EMAIL, credential.email)
+        editor.putInt(KEY_USER_ID, user.userId)
+        editor.putString(KEY_EMAIL, email)
         editor.putString(KEY_FULL_NAME, user.fullName)
         editor.putString(KEY_ADDRESS, user.address)
         editor.putString(KEY_PHONE, user.phone)
@@ -30,5 +30,18 @@ class SessionManager(context: Context) {
         editor.putBoolean(KEY_LOGIN, true)
         editor.apply()
     }
+
+    fun saveUpdate(userId: Int, fullName: String, address: String, phone: String, cityId: Int, provinceId: Int) {
+        val editor = prefs.edit()
+        editor.putInt(KEY_USER_ID, userId)
+        editor.putString(KEY_FULL_NAME, fullName)
+        editor.putString(KEY_ADDRESS, address)
+        editor.putString(KEY_PHONE, phone)
+        editor.putString(KEY_CITY_ID, cityId.toString())
+        editor.putString(KEY_PROVINCE_ID, provinceId.toString())
+        editor.apply()
+    }
+
+    val userId = prefs.getInt(KEY_USER_ID, 0)
 
 }

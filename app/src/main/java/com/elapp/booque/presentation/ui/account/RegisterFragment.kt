@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.elapp.booque.MainActivity
@@ -19,6 +20,7 @@ import com.elapp.booque.databinding.FragmentRegisterBinding
 import com.elapp.booque.presentation.ui.account.handler.RegisterHandler
 import com.elapp.booque.presentation.ui.account.handler.RegisterListener
 import com.elapp.booque.utils.global.SessionManager
+import com.elapp.booque.utils.global.factory.ViewModelFactory
 import com.elapp.booque.utils.network.NetworkState
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -35,7 +37,10 @@ class RegisterFragment : Fragment(), RegisterListener, RegisterHandler {
 
     private lateinit var mGooleSignInClient: GoogleSignInClient
 
-    private lateinit var registerViewModel: RegisterViewModel
+    private val registerViewModel by lazy {
+        val factory = ViewModelFactory.getInstance()
+        ViewModelProvider(this, factory).get(RegisterViewModel::class.java)
+    }
 
     private val RC_SIGN_UP: Int = 1
 
@@ -50,10 +55,8 @@ class RegisterFragment : Fragment(), RegisterListener, RegisterHandler {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        registerViewModel = (activity as FormActivity).registerViewModel
 
         registerViewModel.auth = this
-        binding?.viewmodel = registerViewModel
         binding?.handler = this
 
         initView()
@@ -87,10 +90,10 @@ class RegisterFragment : Fragment(), RegisterListener, RegisterHandler {
         try {
             val acc: GoogleSignInAccount? = completedTask.getResult(ApiException::class.java)
             val email: String = acc?.email.toString()
-            val nama_lengkap: String = acc?.displayName.toString()
+            val namaLengkap: String = acc?.displayName.toString()
             val action = RegisterFragmentDirections.actionRegisterFragmentToRegisterDataFragment(
                 email,
-                nama_lengkap
+                namaLengkap
             )
             findNavController().navigate(action)
         } catch (e: ApiException) {
@@ -98,32 +101,30 @@ class RegisterFragment : Fragment(), RegisterListener, RegisterHandler {
         }
     }
 
-    override fun onSuccess(credential: Credential, response: LiveData<User>) {
-        Timber.d("Register success")
-        response.observe(this, Observer {
-            context?.applicationContext?.let { con ->
-                SessionManager(con).saveOAuth(it, credential)
-                val intent = Intent(context?.applicationContext, MainActivity::class.java)
-                startActivity(intent)
-                activity?.finish()
-            }
-        })
+    override fun onSuccess(message: String) {
+        Toast.makeText(context?.applicationContext, message, Toast.LENGTH_SHORT).show()
     }
+
 
     override fun onFailure(message: String) {
         Toast.makeText(context?.applicationContext, message, Toast.LENGTH_SHORT).show()
     }
 
     override fun onRegisterClicked(view: View) {
-        registerViewModel.registerRequest("default")
+        registerViewModel.registerRequest(
+            binding?.edtEmail?.text.toString(),
+            binding?.edtPassword?.text.toString(),
+            binding?.edtNama?.text.toString(),
+            "default"
+        )
 
         registerViewModel.networkState.observe(viewLifecycleOwner, Observer {
             when (it) {
                 NetworkState.LOADED -> {
-                    isLoading(true)
+                    isLoading(false)
                 }
                 NetworkState.LOADING -> {
-                    isLoading(false)
+                    isLoading(true)
                 }
             }
         })

@@ -1,6 +1,7 @@
 package com.elapp.booque.presentation.ui.book
 
 
+import android.location.Geocoder
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,10 +9,14 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.elapp.booque.MainActivity
 import com.elapp.booque.databinding.FragmentBookBinding
+import com.elapp.booque.utils.global.factory.ViewModelFactory
 import com.elapp.booque.utils.network.NetworkState
+import kotlinx.android.synthetic.main.fragment_book.*
 import timber.log.Timber
 
 class BookFragment : Fragment() {
@@ -20,7 +25,11 @@ class BookFragment : Fragment() {
     private val binding get() = _fragmentBookBinding
 
     private lateinit var bookAdapter: BookAdapter
-    private lateinit var bookViewModel: BookViewModel
+
+    private val bookViewModel by lazy {
+        val factory = ViewModelFactory.getInstance()
+        ViewModelProvider(this, factory).get(BookViewModel::class.java)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,9 +42,27 @@ class BookFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        bookViewModel = (activity as MainActivity).viewModel
-
         bookAdapter = BookAdapter()
+        bookAdapter.addLoadStateListener { loadState ->
+            if (loadState.refresh is LoadState.Loading) {
+                binding?.progressLogin?.visibility = View.VISIBLE
+                binding?.backgroundDim?.visibility = View.VISIBLE
+            }else {
+                binding?.progressLogin?.visibility = View.GONE
+                binding?.backgroundDim?.visibility = View.GONE
+
+                val error = when {
+                    loadState.prepend is LoadState.Error -> loadState.prepend as LoadState.Error
+                    loadState.append is LoadState.Error -> loadState.append as LoadState.Error
+                    loadState.refresh is LoadState.Error -> loadState.refresh as LoadState.Error
+                    else -> null
+                }
+                error?.let {
+                    Toast.makeText(context?.applicationContext, it.error.message , Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
         with(binding?.rvBook){
             this?.adapter = bookAdapter
             this?.layoutManager = LinearLayoutManager(context?.applicationContext, LinearLayoutManager.HORIZONTAL, false)
@@ -47,26 +74,7 @@ class BookFragment : Fragment() {
 
     private fun getBookList(keyword: String) {
         bookViewModel.getListDataBook(keyword).observe(viewLifecycleOwner, Observer {
-            bookAdapter.submitList(it)
-        })
-        bookViewModel.bookNetworkState.observe(viewLifecycleOwner, Observer {
-            Timber.d("Check the network state $it")
-            when (it) {
-                NetworkState.LOADING -> {
-                    Toast.makeText(
-                        context?.applicationContext,
-                        "Network State Loading",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-                NetworkState.LOADED -> {
-                    Toast.makeText(
-                        context?.applicationContext,
-                        "Network State Loaded",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
+            bookAdapter.submitData(lifecycle, it)
         })
     }
 

@@ -12,9 +12,13 @@
 
     <color name="blue_light">#4196D1</color>
     <color name="primary_blue_purple">#22319E</color>
+    <color name="blue_light_2">#CAE5F8</color>
 
     <color name="hint_color">#DADADA</color>
     <color name="input_bg_border_color">#F5F5F5</color>
+    <color name="divider">#F1F1F1</color>
+    <color name="sub_title_color">#303030</color>
+    <color name="input_title_color">#626262</color>
 
     <!-- colors for button style -->
     <color name="gradient_start_color">#4c84ff</color>
@@ -29,5 +33,6 @@
     <color name="tab_indicator_gray">#c0c0c0</color>
     <color name="intro_title_color">#0D0F44</color>
     <color name="intro_description_color">#656565</color>
+    <color name="input_color">#E3E3E3</color>
 
 </resources>

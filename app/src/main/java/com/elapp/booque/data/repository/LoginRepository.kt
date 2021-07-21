@@ -13,10 +13,19 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 
-class LoginRepository (private val accountService: AccountService) {
+class LoginRepository(private val accountService: AccountService) {
 
     var networkState: GlobalEventHandler<NetworkState> = GlobalEventHandler()
     private val resultUser = MutableLiveData<User>()
+
+    companion object {
+        @Volatile
+        private var instance: LoginRepository? = null
+        fun getInstance(accountService: AccountService): LoginRepository =
+            instance ?: synchronized(this) {
+                instance ?: LoginRepository(accountService)
+            }
+    }
 
     fun requestLogin(
         email: String,
@@ -24,6 +33,7 @@ class LoginRepository (private val accountService: AccountService) {
         compositeDisposable: CompositeDisposable
     ): LiveData<User> {
         Timber.d("Loading to request login")
+        networkState.postValue(NetworkState.LOADING)
         compositeDisposable.add(
             accountService.loginRequest(email, password)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -48,6 +58,7 @@ class LoginRepository (private val accountService: AccountService) {
         compositeDisposable: CompositeDisposable
     ): LiveData<User> {
         Timber.d("Oauth login requested")
+        networkState.postValue(NetworkState.LOADING)
         compositeDisposable.add(accountService.oAuthLoginRequest(email)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
@@ -68,13 +79,15 @@ class LoginRepository (private val accountService: AccountService) {
 
     fun registerRequest(
         nama: String,
-        credential: Credential,
+        email: String,
+        password: String,
         type: String,
         compositeDisposable: CompositeDisposable
-    ): LiveData<User>{
+    ): LiveData<User> {
         Timber.d("Register processed")
+        networkState.postValue(NetworkState.LOADING)
         compositeDisposable
-            .add(accountService.registerRequest(nama, credential.email, credential.password!!, type)
+            .add(accountService.registerRequest(nama, email, password, type)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(

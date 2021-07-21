@@ -9,10 +9,6 @@
             name="handler"
             type="com.elapp.booque.presentation.ui.account.handler.RegisterHandler" />
 
-        <variable
-            name="viewmodel"
-            type="com.elapp.booque.presentation.ui.account.RegisterViewModel" />
-
     </data>
 
     <ScrollView
@@ -42,7 +38,6 @@
                 android:hint="@string/dummy_email"
                 android:inputType="textEmailAddress"
                 android:padding="16dp"
-                android:text="@{viewmodel.email}"
                 android:textSize="12sp" />
 
             <TextView
@@ -61,7 +56,6 @@
                 android:hint="@string/dummy_nama_lengkap"
                 android:inputType="text"
                 android:padding="16dp"
-                android:text="@{viewmodel.nama}"
                 android:textSize="12sp" />
 
             <TextView
@@ -80,7 +74,6 @@
                 android:hint="@string/minimal_8_karakter_beserta_angka"
                 android:inputType="textPassword"
                 android:padding="16dp"
-                android:text="@={viewmodel.password}"
                 android:textSize="12sp" />
 
             <TextView
@@ -109,5 +102,4 @@
         </LinearLayout>
 
     </ScrollView>
-
 </layout>

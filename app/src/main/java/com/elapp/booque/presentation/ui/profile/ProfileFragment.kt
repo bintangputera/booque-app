@@ -12,6 +12,7 @@ import androidx.appcompat.app.AlertDialog
 import com.elapp.booque.R
 import com.elapp.booque.databinding.FragmentProfileBinding
 import com.elapp.booque.presentation.ui.account.FormActivity
+import com.elapp.booque.presentation.ui.profile.detail.ProfileDetailActivity
 import com.elapp.booque.utils.SharedPreferencesKey.USER_PREFS_NAME
 
 class ProfileFragment : Fragment() {
@@ -32,9 +33,17 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         sharedPreferences = activity?.getSharedPreferences(USER_PREFS_NAME, Context.MODE_PRIVATE)!!
+
+        binding?.btnLogout?.setOnClickListener {
+            openLogoutDialog()
+        }
+
+        binding?.layoutAkunSaya?.setOnClickListener {
+            startActivity(Intent(context?.applicationContext, ProfileDetailActivity::class.java))
+        }
     }
 
-    /*private fun openLogoutDialog() {
+    private fun openLogoutDialog() {
         val alertDialog = this.context?.let { AlertDialog.Builder(it) }
         alertDialog?.setTitle("Logout?")
             ?.setPositiveButton(
@@ -51,7 +60,7 @@ class ProfileFragment : Fragment() {
         val intent = Intent(this.context, FormActivity::class.java)
         activity?.finish()
         startActivity(intent)
-    }*/
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
