@@ -4,6 +4,8 @@ import com.google.gson.annotations.SerializedName
 
 data class Book(
     val id: Int,
+    @SerializedName("user_id")
+    val userId: Int,
     @SerializedName("book_name")
     val bookName: String,
     val description: String,

@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.elapp.booque.data.entity.Credential
 import com.elapp.booque.data.entity.login.User
+import com.elapp.booque.data.entity.response.login.ResponseUser
 import com.elapp.booque.data.service.account.AccountService
 import com.elapp.booque.utils.global.GlobalEventHandler
 import com.elapp.booque.utils.network.GeneralErrorHandler
@@ -11,6 +12,7 @@ import com.elapp.booque.utils.network.NetworkState
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import retrofit2.Response
 import timber.log.Timber
 
 class LoginRepository(private val accountService: AccountService) {
@@ -31,7 +33,8 @@ class LoginRepository(private val accountService: AccountService) {
         email: String,
         password: String,
         compositeDisposable: CompositeDisposable
-    ): LiveData<User> {
+    ): LiveData<ResponseUser> {
+        val resultUser = MutableLiveData<ResponseUser>()
         Timber.d("Loading to request login")
         networkState.postValue(NetworkState.LOADING)
         compositeDisposable.add(
@@ -41,7 +44,7 @@ class LoginRepository(private val accountService: AccountService) {
                 .subscribe(
                     {
                         Timber.d("Get User ${it.data}")
-                        resultUser.postValue(it.data)
+                        resultUser.postValue(it)
                         networkState.postValue(NetworkState.LOADED)
                     }, {
                         Timber.e("Error while login $it")
@@ -56,7 +59,8 @@ class LoginRepository(private val accountService: AccountService) {
     fun oauthRequestLogin(
         email: String,
         compositeDisposable: CompositeDisposable
-    ): LiveData<User> {
+    ): LiveData<ResponseUser> {
+        val resultUser = MutableLiveData<ResponseUser>()
         Timber.d("Oauth login requested")
         networkState.postValue(NetworkState.LOADING)
         compositeDisposable.add(accountService.oAuthLoginRequest(email)
@@ -65,7 +69,7 @@ class LoginRepository(private val accountService: AccountService) {
             .subscribe(
                 {
                     Timber.d("Oauth get user")
-                    resultUser.postValue(it.data)
+                    resultUser.postValue(it)
                     networkState.postValue(NetworkState.LOADED)
                 }, {
                     Timber.e("Error while Oauth Login $it")

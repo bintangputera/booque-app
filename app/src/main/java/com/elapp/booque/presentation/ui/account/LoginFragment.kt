@@ -119,7 +119,18 @@ class LoginFragment : Fragment(), LoginHandler, AuthListener {
     }
 
     override fun onLoginClicked(view: View) {
-        formViewModel.loginRequest(binding?.edtEmail?.text.toString(), binding?.edtPassword?.text.toString())
+        formViewModel.loginRequest(
+            binding?.edtEmail?.text.toString(),
+            binding?.edtPassword?.text.toString()
+        ).observe(this, Observer { user ->
+            context?.applicationContext?.let { con ->
+                SessionManager(con).saveOAuth(user.data, binding?.edtEmail?.text.toString())
+                val intent = Intent(context?.applicationContext, MainActivity::class.java)
+                startActivity(intent)
+                requireActivity().finish()
+                Timber.d("Activity finished")
+            }
+        })
         formViewModel.loginNetworkState.observe(viewLifecycleOwner, Observer {
             when (it) {
                 NetworkState.LOADING -> {
@@ -129,6 +140,7 @@ class LoginFragment : Fragment(), LoginHandler, AuthListener {
                     isLoading(false)
                 }
                 else -> {
+                    isLoading(false)
                     Toast.makeText(
                         context?.applicationContext,
                         it.status.toString(),
@@ -160,19 +172,6 @@ class LoginFragment : Fragment(), LoginHandler, AuthListener {
             }
         })
     }
-
-    /*override fun onSuccess(credential: Credential, response: LiveData<User>) {
-        Timber.d("Login success")
-        response.observe(this, Observer {
-            context?.applicationContext?.let { con ->
-                SessionManager(con).saveOAuth(it, credential)
-                val intent = Intent(context?.applicationContext, MainActivity::class.java)
-                startActivity(intent)
-                requireActivity().finish()
-                Timber.d("Activity finished")
-            }
-        })
-    }*/
 
     override fun onFailure(message: String) {
         Toast.makeText(context?.applicationContext, message, Toast.LENGTH_SHORT).show()

@@ -81,11 +81,18 @@
     <string name="blog_title">Blog Title</string>
     <string name="category">Category</string>
     <string name="blog">Blog</string>
+    <string name="description">Description</string>
+    <string name="hubungi_booqer">Hubungi Booqer</string>
+    <string name="barcode_akun">Barcode Akun</string>
+    <string name="scan_barcode_dibawah_ini">Scan barcode dibawah ini</string>
     <string-array name="category_list">
-        <item>Komik</item>
         <item>Novel</item>
+        <item>Komik</item>
         <item>Buku Pelajaran</item>
-        <item>Majalah</item>
+        <item>Sejarah</item>
+        <item>Dongeng</item>
+        <item>Kamus</item>
+        <item>Cergam</item>
     </string-array>
 
 </resources>

@@ -12,9 +12,17 @@ import com.elapp.booque.data.entity.book.Book
 import com.elapp.booque.databinding.BookListItemBinding
 import com.elapp.booque.databinding.BookListLayoutBinding
 import com.elapp.booque.presentation.ui.article.listener.BlogListener
+import com.elapp.booque.presentation.ui.book.listener.ItemListener
+import com.elapp.booque.utils.global.NetworkAuthConf
 import com.squareup.picasso.Picasso
 
 class BookAdapter : PagingDataAdapter<Book, BookAdapter.BookViewHolder>(DIFF_CALLBACK) {
+
+    private lateinit var bookItemListener: ItemListener
+
+    fun onItemClicked(listener: ItemListener) {
+        this.bookItemListener = listener
+    }
 
     companion object {
         private val DIFF_CALLBACK: DiffUtil.ItemCallback<Book> = object :
@@ -31,8 +39,11 @@ class BookAdapter : PagingDataAdapter<Book, BookAdapter.BookViewHolder>(DIFF_CAL
     }
 
     override fun onBindViewHolder(holder: BookViewHolder, position: Int) {
-        getItem(position)?.let {
-            holder.bind(it)
+        getItem(position)?.let { book ->
+            holder.bind(book)
+            holder.itemView.setOnClickListener {
+                bookItemListener.onItemCLicked(book)
+            }
         }
     }
 
@@ -46,9 +57,8 @@ class BookAdapter : PagingDataAdapter<Book, BookAdapter.BookViewHolder>(DIFF_CAL
         RecyclerView.ViewHolder(binding.root) {
         fun bind(book: Book) {
             binding.txBookTitle.text = book.bookName
-            binding.txDeskripsi.text = book.description
             binding.txCategory.text = book.categoryName
-            Picasso.get().load(book.thumbnail)
+            Picasso.get().load(NetworkAuthConf.BOOK_THUMBNAIL_BASE_URL + book.userId + "/books/" + book.thumbnail).into(binding.imgBookThumbnail)
         }
     }
 

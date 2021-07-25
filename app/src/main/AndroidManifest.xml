@@ -14,25 +14,32 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Booque"
         android:usesCleartextTraffic="true">
+        <activity android:name=".presentation.ui.book.edit.EditBookActivity"></activity>
+        <activity
+            android:name=".presentation.ui.book.detail.BookDetailActivity"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/Theme.Booque.ActionBar" />
+        <activity android:name=".presentation.ui.book.bukuku.BukukuActivity"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/Theme.Booque.ActionBar"/>
         <activity
             android:name=".presentation.ui.city.CityActivity"
-            android:theme="@style/Theme.Booque.ActionBar"
-            android:parentActivityName=".presentation.ui.profile.detail.ProfileDetailActivity"/>
+            android:parentActivityName=".presentation.ui.profile.detail.ProfileDetailActivity"
+            android:theme="@style/Theme.Booque.ActionBar" />
         <activity
             android:name=".presentation.ui.province.ProvinceActivity"
-            android:theme="@style/Theme.Booque.ActionBar"
-            android:parentActivityName=".presentation.ui.profile.detail.ProfileDetailActivity" />
-        <activity
-            android:name=".presentation.ui.account.FormActivity" />
+            android:parentActivityName=".presentation.ui.profile.detail.ProfileDetailActivity"
+            android:theme="@style/Theme.Booque.ActionBar" />
+        <activity android:name=".presentation.ui.account.FormActivity" />
         <activity
             android:name=".presentation.ui.article.ArticleWebViewActivity"
-            android:theme="@style/Theme.Booque.ActionBar"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/Theme.Booque.ActionBar" />
         <activity android:name=".presentation.ui.onboarding.OnBoardingActivity" />
         <activity
             android:name=".presentation.ui.profile.detail.ProfileDetailActivity"
-            android:theme="@style/Theme.Booque.ActionBar"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/Theme.Booque.ActionBar" />
         <activity android:name=".presentation.ui.splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

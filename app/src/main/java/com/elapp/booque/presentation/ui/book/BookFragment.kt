@@ -1,6 +1,7 @@
 package com.elapp.booque.presentation.ui.book
 
 
+import android.content.Intent
 import android.location.Geocoder
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,13 +14,16 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.elapp.booque.MainActivity
+import com.elapp.booque.data.entity.book.Book
 import com.elapp.booque.databinding.FragmentBookBinding
+import com.elapp.booque.presentation.ui.book.detail.BookDetailActivity
+import com.elapp.booque.presentation.ui.book.listener.ItemListener
 import com.elapp.booque.utils.global.factory.ViewModelFactory
 import com.elapp.booque.utils.network.NetworkState
 import kotlinx.android.synthetic.main.fragment_book.*
 import timber.log.Timber
 
-class BookFragment : Fragment() {
+class BookFragment : Fragment(), ItemListener {
 
     private var _fragmentBookBinding: FragmentBookBinding? = null
     private val binding get() = _fragmentBookBinding
@@ -43,6 +47,7 @@ class BookFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         bookAdapter = BookAdapter()
+        bookAdapter.onItemClicked(this)
         bookAdapter.addLoadStateListener { loadState ->
             if (loadState.refresh is LoadState.Loading) {
                 binding?.progressLogin?.visibility = View.VISIBLE
@@ -65,17 +70,23 @@ class BookFragment : Fragment() {
 
         with(binding?.rvBook){
             this?.adapter = bookAdapter
-            this?.layoutManager = LinearLayoutManager(context?.applicationContext, LinearLayoutManager.HORIZONTAL, false)
+            this?.layoutManager = LinearLayoutManager(context?.applicationContext, LinearLayoutManager.VERTICAL, false)
         }
 
-        getBookList("")
+        getBookList()
 
     }
 
-    private fun getBookList(keyword: String) {
-        bookViewModel.getListDataBook(keyword).observe(viewLifecycleOwner, Observer {
+    private fun getBookList() {
+        bookViewModel.getListDataBook().observe(viewLifecycleOwner, Observer {
             bookAdapter.submitData(lifecycle, it)
         })
+    }
+
+    override fun onItemCLicked(book: Book) {
+        val intent = Intent(context?.applicationContext, BookDetailActivity::class.java)
+        intent.putExtra("book_id", book.id)
+        startActivity(intent)
     }
 
 }

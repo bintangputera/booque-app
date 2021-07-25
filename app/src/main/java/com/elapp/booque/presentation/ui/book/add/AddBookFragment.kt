@@ -1,5 +1,6 @@
 package com.elapp.booque.presentation.ui.book.add
 
+import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.net.toFile
 import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -45,6 +47,7 @@ class AddBookFragment: Fragment(), BookListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initiatePermission(requireContext())
 
         binding?.imgBook?.setOnClickListener {
             chooseFoodImage.launch("image/*")
@@ -52,7 +55,6 @@ class AddBookFragment: Fragment(), BookListener {
         binding?.btnAddBook?.setOnClickListener {
             postBook()
         }
-        initiatePermission(requireContext())
     }
 
     private fun postBook() {
@@ -64,6 +66,9 @@ class AddBookFragment: Fragment(), BookListener {
         val bookYear = binding?.edtYear?.text?.toString()
         val bookRelease = binding?.edtPenerbit?.text?.toString()
         val userId = SessionManager(requireContext()).userId
+
+        val cityId = SessionManager(requireContext()).cityId
+        val provinceId = SessionManager(requireContext()).provinceId
 
         when {
             bookName.isNullOrEmpty() -> {
@@ -92,23 +97,24 @@ class AddBookFragment: Fragment(), BookListener {
                     userId,
                     bookDescription,
                     bookAddress,
-                    1,
+                    8,
                     bookImagePath,
                     bookAuthor,
                     bookYear,
                     bookRelease,
-                    1,
-                    1
+                    cityId,
+                    provinceId
                 )
             }
         }
-
     }
 
     private val chooseFoodImage = registerForActivityResult(ActivityResultContracts.GetContent()) {
         binding?.imgBook?.setImageURI(it)
         Timber.d("uri Check, $it")
         bookImagePath = FileHelper().convertUriToFilePath(requireContext(), it)
+        Timber.d("Check uri converted : $bookImagePath")
+        Toast.makeText(context?.applicationContext, "Uri : $bookImagePath", Toast.LENGTH_SHORT).show()
     }
 
     private fun initiatePermission(context: Context) {

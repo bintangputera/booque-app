@@ -3,6 +3,8 @@ package com.elapp.booque.presentation.ui.account
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.elapp.booque.data.entity.Credential
+import com.elapp.booque.data.entity.login.User
+import com.elapp.booque.data.entity.response.login.ResponseUser
 import com.elapp.booque.data.repository.LoginRepository
 import com.elapp.booque.presentation.ui.account.handler.AuthListener
 import com.elapp.booque.utils.network.NetworkState
@@ -18,25 +20,12 @@ class FormViewModel(
 
     fun oauthLogin(
         email: String
-    ) {
-        if (email.isEmpty()) {
-            auth?.onFailure("Email kosong")
-            return
-        }
-        else {
-            val loginResult = loginRepository.oauthRequestLogin(email, compositeDisposable)
-            auth?.onSuccess(email, "", loginResult)
-        }
+    ): LiveData<ResponseUser> {
+        return loginRepository.oauthRequestLogin(email, compositeDisposable)
     }
 
-    fun loginRequest(email: String, password: String) {
-        if (email.isEmpty() || password.isEmpty() ) {
-            auth?.onFailure("Masih ada data yang kosong")
-            return
-        } else {
-            val loginResult = loginRepository.requestLogin(email, password, compositeDisposable)
-            auth?.onSuccess(email,password, loginResult)
-        }
+    fun loginRequest(email: String, password: String): LiveData<ResponseUser> {
+        return loginRepository.requestLogin(email, password, compositeDisposable)
     }
 
     val loginNetworkState: LiveData<NetworkState> by lazy {

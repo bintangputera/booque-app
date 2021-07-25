@@ -1,5 +1,6 @@
 package com.elapp.booque.presentation.ui.city
 
+import android.app.Activity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -12,6 +13,7 @@ import com.elapp.booque.data.entity.city.City
 import com.elapp.booque.databinding.ActivityCityBinding
 import com.elapp.booque.presentation.ui.city.adapter.CityAdapter
 import com.elapp.booque.presentation.ui.city.listener.CityItemListener
+import com.elapp.booque.utils.global.SessionManager
 import com.elapp.booque.utils.global.factory.ViewModelFactory
 
 class CityActivity : AppCompatActivity(), CityItemListener {
@@ -32,6 +34,8 @@ class CityActivity : AppCompatActivity(), CityItemListener {
         setContentView(_activityCityBinding?.root)
 
         title = "Pilih Kota"
+
+        val provinceId = intent.getIntExtra("province_id", 0)
 
         cityAdapter = CityAdapter()
         binding?.rvCity?.adapter = cityAdapter
@@ -57,7 +61,7 @@ class CityActivity : AppCompatActivity(), CityItemListener {
             }
         }
 
-        loadCityListData(1)
+        loadCityListData(provinceId)
 
     }
 
@@ -68,7 +72,11 @@ class CityActivity : AppCompatActivity(), CityItemListener {
     }
 
     override fun onItemClicked(city: City) {
-        Toast.makeText(this, "Cek : ${city.id}", Toast.LENGTH_SHORT).show()
+        intent.putExtra("city_id", city.id)
+        intent.putExtra("city_name", city.cityName)
+        SessionManager(this).saveCity(city.cityName)
+        setResult(Activity.RESULT_OK, intent)
+        finish()
     }
 
 }

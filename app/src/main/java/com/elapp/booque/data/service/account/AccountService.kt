@@ -45,7 +45,7 @@ interface AccountService {
        @Field("id") id: Int
    ): Observable<ResponseDetailUser>
 
-   @PUT("/api/v1/update-profile/{id}")
+   @PUT("api/v1/update-profile/{id}")
    @FormUrlEncoded
    fun updateProfile(
        @Path("id") id: Int,

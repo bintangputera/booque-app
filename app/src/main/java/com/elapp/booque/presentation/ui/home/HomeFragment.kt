@@ -7,27 +7,30 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.elapp.booque.R
 import com.elapp.booque.data.entity.book.Book
-import com.elapp.booque.data.entity.category.Category
 import com.elapp.booque.databinding.FragmentHomeBinding
 import com.elapp.booque.presentation.ui.article.ArticleWebViewActivity
+import com.elapp.booque.presentation.ui.book.BookViewModel
+import com.elapp.booque.presentation.ui.book.detail.BookDetailActivity
+import com.elapp.booque.presentation.ui.book.listener.ItemListener
 import com.elapp.booque.utils.SharedPreferencesKey.KEY_FULL_NAME
-import com.elapp.booque.utils.SharedPreferencesKey.KEY_NAME
-import com.elapp.booque.utils.SharedPreferencesKey.PREFS_NAME
 import com.elapp.booque.utils.SharedPreferencesKey.USER_PREFS_NAME
+import com.elapp.booque.utils.global.factory.ViewModelFactory
 import com.elapp.booque.utils.helper.ArticleOnClickListener
-import com.elapp.booque.utils.helper.BannerListener
 import timber.log.Timber
-import java.util.*
 
 
-class HomeFragment : Fragment(), ArticleOnClickListener {
+class HomeFragment : Fragment(), ArticleOnClickListener, ItemListener {
+
+    private val viewModel by lazy {
+        val factory = ViewModelFactory.getInstance()
+        ViewModelProvider(this, factory).get(BookViewModel::class.java)
+    }
 
     private var _fragmentHomeBinding: FragmentHomeBinding? = null
     private val binding get() = _fragmentHomeBinding
@@ -35,6 +38,8 @@ class HomeFragment : Fragment(), ArticleOnClickListener {
     private lateinit var sharedPrefences: SharedPreferences
 
     private lateinit var bannerAdapter: BannerAdapter
+
+    private lateinit var bookListAdapter: BookListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,8 +55,22 @@ class HomeFragment : Fragment(), ArticleOnClickListener {
         sharedPrefences = context?.getSharedPreferences(USER_PREFS_NAME, Context.MODE_PRIVATE)!!
         loadDataFromPreferences()
 
+        bookListAdapter = BookListAdapter()
+        bookListAdapter.onItemClicked(this)
+
+        binding?.rvBook?.adapter = bookListAdapter
+        binding?.rvBook?.layoutManager = LinearLayoutManager(context?.applicationContext, LinearLayoutManager.HORIZONTAL,false)
+
         initBanner()
 
+        getBookList()
+
+    }
+
+    private fun getBookList() {
+        viewModel.getListDataBook().observe(viewLifecycleOwner, Observer {
+            bookListAdapter.submitData(lifecycle, it)
+        })
     }
 
     private fun loadDataFromPreferences() {
@@ -99,6 +118,12 @@ class HomeFragment : Fragment(), ArticleOnClickListener {
     override fun onDestroyView() {
         super.onDestroyView()
         _fragmentHomeBinding = null
+    }
+
+    override fun onItemCLicked(book: Book) {
+        val intent = Intent(context?.applicationContext, BookDetailActivity::class.java)
+        intent.putExtra("book_id", book.id)
+        startActivity(intent)
     }
 
 }

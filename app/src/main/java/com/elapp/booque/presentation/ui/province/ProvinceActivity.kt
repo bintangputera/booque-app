@@ -1,5 +1,6 @@
 package com.elapp.booque.presentation.ui.province
 
+import android.app.Activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -13,6 +14,7 @@ import com.elapp.booque.data.entity.province.Province
 import com.elapp.booque.databinding.ActivityProvinceBinding
 import com.elapp.booque.presentation.ui.province.adapter.ProvinceAdapter
 import com.elapp.booque.presentation.ui.province.listener.ItemListener
+import com.elapp.booque.utils.global.SessionManager
 import com.elapp.booque.utils.global.factory.ViewModelFactory
 
 class ProvinceActivity : AppCompatActivity(), ItemListener {
@@ -70,7 +72,11 @@ class ProvinceActivity : AppCompatActivity(), ItemListener {
     }
 
     override fun onClicked(province: Province) {
-        Toast.makeText(this, "Cek : ${province.id}", Toast.LENGTH_SHORT).show()
+        intent.putExtra("province_id", province.id)
+        intent.putExtra("province_name", province.provinceName)
+        SessionManager(this).saveProvince(province.provinceName)
+        setResult(Activity.RESULT_OK, intent)
+        finish()
     }
 
 }

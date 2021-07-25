@@ -22,7 +22,7 @@ class BlogAdapter: PagingDataAdapter<Blog, BlogAdapter.BlogViewHolder>(DIFF_CALL
         this.blogListener = listener
     }
 
-            companion object {
+    companion object {
         private val DIFF_CALLBACK: DiffUtil.ItemCallback<Blog> = object :
             DiffUtil.ItemCallback<Blog>() {
             override fun areItemsTheSame(oldItem: Blog, newItem: Blog): Boolean {

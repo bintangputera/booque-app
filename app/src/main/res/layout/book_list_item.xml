@@ -11,8 +11,9 @@
 
         <ImageView
             android:id="@+id/img_book_thumbnail"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:scaleType="fitXY"
             android:background="@drawable/bg_book_item"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -42,21 +43,6 @@
 
             <TextView
                 android:id="@+id/tx_category"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/kategori"
-                android:textColor="@color/primary_blue_purple"
-                android:textSize="16sp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/deskripsi"
-                android:textColor="@color/light_grey"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/tx_deskripsi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/kategori"

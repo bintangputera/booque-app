@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.WindowManager
+import androidx.appcompat.app.AppCompatDelegate
 import com.elapp.booque.MainActivity
 import com.elapp.booque.databinding.ActivitySplashBinding
 import com.elapp.booque.presentation.ui.account.FormActivity
@@ -25,6 +26,7 @@ class SplashActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         _activitySplashBinding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(_activitySplashBinding?.root)
         window.setFlags(

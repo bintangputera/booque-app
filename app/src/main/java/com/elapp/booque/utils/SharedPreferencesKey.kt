@@ -7,6 +7,7 @@ object SharedPreferencesKey {
 
     // User prefs key
     const val USER_PREFS_NAME = "UserDataPreferences"
+    const val LOCATION_PREFS_NAME = "LocationDataPreferences"
     const val KEY_USERNAME = "key.username"
     const val KEY_EMAIL = "key.email"
     const val KEY_PASSWORD = "key.password"
@@ -19,5 +20,8 @@ object SharedPreferencesKey {
     const val KEY_PHONE = "key.phone"
     const val KEY_CITY_ID = "key.cityId"
     const val KEY_PROVINCE_ID = "key.provinceId"
+
+    const val KEY_CITY_NAME = "key.cityName"
+    const val KEY_PROVINCE_NAME = "key.provinceName"
 
 }

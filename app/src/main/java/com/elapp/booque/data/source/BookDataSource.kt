@@ -13,8 +13,7 @@ import retrofit2.HttpException
 import java.io.IOException
 
 class BookDataSource  (
-    private val bookService: BookService,
-    private val keyword: String
+    private val bookService: BookService
 ) : RxPagingSource<Int, Book>() {
 
     val eventHandler = GlobalEventHandler<NetworkState>()
@@ -22,7 +21,7 @@ class BookDataSource  (
     override fun loadSingle(params: LoadParams<Int>): Single<LoadResult<Int, Book>> {
         val page = params.key ?: FIRST_PAGE
         eventHandler.postValue(NetworkState.LOADING)
-        return bookService.getBookList(keyword)
+        return bookService.getBookList()
             .subscribeOn(Schedulers.io())
             .map<LoadResult<Int, Book>> {
                 LoadResult.Page(

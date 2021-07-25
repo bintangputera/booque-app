@@ -1,13 +1,17 @@
 package com.elapp.booque.presentation.ui.profile.detail
 
+import android.app.Activity
 import android.content.Intent
 import android.icu.number.IntegerWidth
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.elapp.booque.data.entity.province.Province
 import com.elapp.booque.databinding.ActivityProfileDetailBinding
 import com.elapp.booque.presentation.ui.city.CityActivity
 import com.elapp.booque.presentation.ui.profile.ProfileViewModel
@@ -22,6 +26,12 @@ class ProfileDetailActivity : AppCompatActivity() {
         val factory = ViewModelFactory.getInstance()
         ViewModelProvider(this, factory).get(ProfileViewModel::class.java)
     }
+
+    private var provinceId: Int = 0
+    private var cityId: Int = 0
+
+    private lateinit var provinceName: String
+    private lateinit var cityName: String
 
     private var _profileDetailActivityBinding: ActivityProfileDetailBinding? = null
     private val binding get() = _profileDetailActivityBinding
@@ -38,11 +48,13 @@ class ProfileDetailActivity : AppCompatActivity() {
         getProfileDetail(userId)
 
         binding?.btnSearchProvince?.setOnClickListener {
-            startActivity(Intent(this, ProvinceActivity::class.java))
+            provinceLauncher.launch(Intent(this, ProvinceActivity::class.java))
         }
 
         binding?.btnSearchCity?.setOnClickListener {
-            startActivity(Intent(this, CityActivity::class.java))
+            val intent = Intent(this, CityActivity::class.java)
+            intent.putExtra("province_id", provinceId)
+            cityLauncer.launch(intent)
         }
 
         binding?.btnSimpanPerubahan?.setOnClickListener {
@@ -54,9 +66,30 @@ class ProfileDetailActivity : AppCompatActivity() {
                 binding?.edtName?.text?.toString(),
                 binding?.edtAlamat?.text?.toString(),
                 phone,
-                1326,
-                1
+                cityId,
+                provinceId
             )
+        }
+    }
+
+    private val provinceLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val intent = result.data
+            provinceId = intent?.getIntExtra("province_id", 0)!!
+            Toast.makeText(this, "Province id : $provinceId", Toast.LENGTH_SHORT).show()
+            provinceName = SessionManager(this).provinceName.toString()
+            binding?.edtProvinsi?.setText(provinceName)
+            Toast.makeText(this, "Id terparsed : $provinceId dan Nama $provinceName", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private val cityLauncer = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val intent = result.data
+            cityId = intent?.getIntExtra("city_id", 0)!!
+            Toast.makeText(this, "City Id : $cityId", Toast.LENGTH_SHORT).show()
+            cityName = SessionManager(this).cityName.toString()
+            binding?.edtKota?.setText(cityName)
         }
     }
 
@@ -127,6 +160,8 @@ class ProfileDetailActivity : AppCompatActivity() {
         if (!status) {
             binding?.bgDim?.visibility = View.INVISIBLE
             binding?.progressBar?.visibility = View.INVISIBLE
+            binding?.edtProvinsi?.setText(SessionManager(this).provinceName)
+            binding?.edtKota?.setText(SessionManager(this).cityName)
         } else {
             binding?.bgDim?.visibility = View.VISIBLE
             binding?.progressBar?.visibility = View.VISIBLE

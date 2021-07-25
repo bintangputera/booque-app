@@ -122,6 +122,7 @@ class RegisterFragment : Fragment(), RegisterListener, RegisterHandler {
             when (it) {
                 NetworkState.LOADED -> {
                     isLoading(false)
+                    view.findNavController().popBackStack()
                 }
                 NetworkState.LOADING -> {
                     isLoading(true)
