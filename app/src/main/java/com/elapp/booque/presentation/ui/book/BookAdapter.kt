@@ -1,6 +1,7 @@
 package com.elapp.booque.presentation.ui.book
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
 import androidx.paging.PagingDataAdapter
@@ -56,6 +57,10 @@ class BookAdapter : PagingDataAdapter<Book, BookAdapter.BookViewHolder>(DIFF_CAL
     inner class BookViewHolder(val binding: BookListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(book: Book) {
+            if (book.status == "2") {
+                binding.bgCover.visibility = View.VISIBLE
+                binding.tvPesanHabis.visibility = View.VISIBLE
+            }
             binding.txBookTitle.text = book.bookName
             binding.txCategory.text = book.categoryName
             Picasso.get().load(NetworkAuthConf.BOOK_THUMBNAIL_BASE_URL + book.userId + "/books/" + book.thumbnail).into(binding.imgBookThumbnail)

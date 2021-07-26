@@ -14,14 +14,21 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Booque"
         android:usesCleartextTraffic="true">
-        <activity android:name=".presentation.ui.book.edit.EditBookActivity"></activity>
+        <activity android:name=".presentation.ui.book.transaksi.TransaksiActivity"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/Theme.Booque.ActionBar"/>
+        <activity android:name=".presentation.ui.book.barcode.BarcodeActivity" />
+        <activity android:name=".presentation.ui.book.konfirmasi.KonfirmasiActivity"
+            android:theme="@style/Theme.Booque.ActionBar" />
+        <activity android:name=".presentation.ui.book.edit.EditBookActivity" />
         <activity
             android:name=".presentation.ui.book.detail.BookDetailActivity"
             android:parentActivityName=".MainActivity"
             android:theme="@style/Theme.Booque.ActionBar" />
-        <activity android:name=".presentation.ui.book.bukuku.BukukuActivity"
+        <activity
+            android:name=".presentation.ui.book.bukuku.BukukuActivity"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/Theme.Booque.ActionBar"/>
+            android:theme="@style/Theme.Booque.ActionBar" />
         <activity
             android:name=".presentation.ui.city.CityActivity"
             android:parentActivityName=".presentation.ui.profile.detail.ProfileDetailActivity"

@@ -14,6 +14,7 @@ import com.elapp.booque.R
 import com.elapp.booque.databinding.FragmentProfileBinding
 import com.elapp.booque.presentation.ui.account.FormActivity
 import com.elapp.booque.presentation.ui.book.bukuku.BukukuActivity
+import com.elapp.booque.presentation.ui.book.transaksi.TransaksiActivity
 import com.elapp.booque.presentation.ui.profile.barcode.BarcodeDialogFragment
 import com.elapp.booque.presentation.ui.profile.detail.ProfileDetailActivity
 import com.elapp.booque.utils.SharedPreferencesKey.LOCATION_PREFS_NAME
@@ -51,6 +52,10 @@ class ProfileFragment : Fragment() {
 
         binding?.layoutDaftarBuku?.setOnClickListener {
             startActivity(Intent(context?.applicationContext, BukukuActivity::class.java))
+        }
+
+        binding?.layoutRiwayatTransaksi?.setOnClickListener {
+            startActivity(Intent(context?.applicationContext, TransaksiActivity::class.java))
         }
 
         binding?.layoutScanQrcode?.setOnClickListener {

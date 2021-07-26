@@ -1,15 +1,25 @@
 package com.elapp.booque.presentation.ui.book.edit
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.elapp.booque.R
 import com.elapp.booque.databinding.ActivityEditBookBinding
 import com.elapp.booque.presentation.ui.book.BookViewModel
 import com.elapp.booque.utils.global.factory.ViewModelFactory
+import com.elapp.booque.utils.helper.FileHelper
 import com.elapp.booque.utils.network.NetworkState
+import com.karumi.dexter.Dexter
+import com.karumi.dexter.MultiplePermissionsReport
+import com.karumi.dexter.PermissionToken
+import com.karumi.dexter.listener.PermissionRequest
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener
+import timber.log.Timber
 
 class EditBookActivity : AppCompatActivity() {
 
@@ -21,14 +31,30 @@ class EditBookActivity : AppCompatActivity() {
     private var _activityEditBookBinding: ActivityEditBookBinding? = null
     private val binding get() = _activityEditBookBinding
 
+    private var bookImagePath: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _activityEditBookBinding = ActivityEditBookBinding.inflate(layoutInflater)
         setContentView(_activityEditBookBinding?.root)
 
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+
+        initiatePermission(this)
+
         val id = intent.getIntExtra("book_id",0)
 
+        binding?.imgBook?.setOnClickListener {
+            chooseBookImage.launch("image/*")
+        }
+
         loadBookDetail(id)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 
     private fun loadBookDetail(bookId: Int) {
@@ -55,6 +81,39 @@ class EditBookActivity : AppCompatActivity() {
                 NetworkState.LOADED -> isLoading(false)
             }
         })
+    }
+
+    private val chooseBookImage = registerForActivityResult(ActivityResultContracts.GetContent()) {
+        binding?.imgBook?.setImageURI(it)
+        Timber.d("uri Check, $it")
+        bookImagePath = FileHelper().convertUriToFilePath(this, it)
+        Timber.d("Check uri converted : $bookImagePath")
+        Toast.makeText(applicationContext, "Uri : $bookImagePath", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun initiatePermission(context: Context) {
+        Dexter.withContext(context)
+            .withPermissions(
+                android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                android.Manifest.permission.READ_EXTERNAL_STORAGE,
+                android.Manifest.permission.CAMERA
+            ).withListener(object : MultiplePermissionsListener {
+                override fun onPermissionsChecked(p0: MultiplePermissionsReport?) {
+                    if (p0?.areAllPermissionsGranted() == true) {
+                        Timber.d("Granted!")
+                    }
+                }
+
+                override fun onPermissionRationaleShouldBeShown(
+                    p0: MutableList<PermissionRequest>?,
+                    p1: PermissionToken?
+                ) {
+                    p1?.continuePermissionRequest()
+                }
+            }).withErrorListener {
+                Toast.makeText(context.applicationContext, "Error", Toast.LENGTH_SHORT).show()
+            }.onSameThread()
+            .check()
     }
 
     private fun isLoading(status: Boolean) {

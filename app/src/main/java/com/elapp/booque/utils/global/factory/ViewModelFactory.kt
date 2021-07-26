@@ -12,6 +12,7 @@ import com.elapp.booque.presentation.ui.account.RegisterViewModel
 import com.elapp.booque.presentation.ui.article.BlogViewModel
 import com.elapp.booque.presentation.ui.book.BookViewModel
 import com.elapp.booque.presentation.ui.book.add.AddBookViewModel
+import com.elapp.booque.presentation.ui.book.konfirmasi.KonfirmasiViewModel
 import com.elapp.booque.presentation.ui.city.CityViewModel
 import com.elapp.booque.presentation.ui.profile.ProfileViewModel
 import com.elapp.booque.presentation.ui.province.ProvinceViewModel
@@ -61,6 +62,9 @@ class ViewModelFactory(
             }
             modelClass.isAssignableFrom(AddBookViewModel::class.java) -> {
                 AddBookViewModel() as T
+            }
+            modelClass.isAssignableFrom(KonfirmasiViewModel::class.java) -> {
+                KonfirmasiViewModel() as T
             }
             modelClass.isAssignableFrom(ProvinceViewModel::class.java) -> {
                 ProvinceViewModel(provinceRepository, compositeDisposable) as T

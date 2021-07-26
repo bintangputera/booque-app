@@ -49,6 +49,8 @@ class AddBookFragment: Fragment(), BookListener {
         super.onViewCreated(view, savedInstanceState)
         initiatePermission(requireContext())
 
+        viewModel.listener = this
+
         binding?.imgBook?.setOnClickListener {
             chooseFoodImage.launch("image/*")
         }
@@ -171,6 +173,7 @@ class AddBookFragment: Fragment(), BookListener {
     }
 
     override fun onSuccess(message: String) {
+        checkLoading(false)
         Toast.makeText(context?.applicationContext, "Message : $message", Toast.LENGTH_SHORT).show()
     }
 

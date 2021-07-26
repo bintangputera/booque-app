@@ -97,6 +97,18 @@
         android:textAllCaps="false"
         android:background="@drawable/btn_background_purple"
         app:layout_constraintBottom_toBottomOf="parent"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp" />
+
+    <Button
+        android:id="@+id/btn_sumbangkan_buku"
+        android:text="@string/sumbangkan_buku"
+        android:textAllCaps="false"
+        android:background="@drawable/btn_background_purple"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp" />

@@ -1,6 +1,7 @@
 package com.elapp.booque.presentation.ui.home
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
@@ -41,8 +42,6 @@ class BookListAdapter: PagingDataAdapter<Book, BookListAdapter.BookViewHolder>(D
         return BookViewHolder(view)
     }
 
-//    override fun getItemCount(): Int = 5
-
     override fun onBindViewHolder(holder: BookListAdapter.BookViewHolder, position: Int) {
         getItem(position)?.let { book ->
             holder.bind(book)
@@ -55,6 +54,17 @@ class BookListAdapter: PagingDataAdapter<Book, BookListAdapter.BookViewHolder>(D
 
     inner class BookViewHolder(val binding: BookListLayoutBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(book: Book) {
+            if (book.status == "2") {
+                binding.bgCover.visibility = View.VISIBLE
+                binding.tvPesanHabis.visibility = View.VISIBLE
+                itemView.isEnabled = false
+                itemView.isClickable = false
+            } else {
+                binding.bgCover.visibility = View.INVISIBLE
+                binding.tvPesanHabis.visibility = View.INVISIBLE
+                itemView.isEnabled = true
+                itemView.isClickable = true
+            }
             Picasso.get().load(BOOK_THUMBNAIL_BASE_URL + book.userId + "/books/" + book.thumbnail).into(binding.imgBookThumbnail)
             binding.txBookTitle.text = book.bookName
             binding.txCategoryTitle.text = book.categoryName

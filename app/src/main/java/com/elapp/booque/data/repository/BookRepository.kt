@@ -8,9 +8,11 @@ import androidx.paging.PagingData
 import androidx.paging.rxjava2.flowable
 import com.elapp.booque.data.entity.book.Book
 import com.elapp.booque.data.entity.response.book.Category
+import com.elapp.booque.data.entity.transaction.Transaksi
 import com.elapp.booque.data.service.book.BookService
 import com.elapp.booque.data.source.BookDataSource
 import com.elapp.booque.data.source.CategoryDataSource
+import com.elapp.booque.data.source.TransaksiDataSource
 import com.elapp.booque.data.source.UserBookDataSource
 import com.elapp.booque.utils.global.GlobalEventHandler
 import com.elapp.booque.utils.global.NetworkAuthConf.FIRST_PAGE
@@ -23,7 +25,7 @@ import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 import java.util.concurrent.Flow
 
-class BookRepository (val bookService: BookService) {
+class BookRepository(val bookService: BookService) {
 
     companion object {
         @Volatile
@@ -68,6 +70,17 @@ class BookRepository (val bookService: BookService) {
             ),
             initialKey = FIRST_PAGE,
             pagingSourceFactory = { CategoryDataSource(bookService) }
+        ).flowable
+    }
+
+    fun requestListTransaksi(userId: Int): Flowable<PagingData<Transaksi>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = 20,
+                enablePlaceholders = false
+            ),
+            initialKey = FIRST_PAGE,
+            pagingSourceFactory = { TransaksiDataSource(userId, bookService) }
         ).flowable
     }
 

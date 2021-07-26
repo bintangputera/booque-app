@@ -15,7 +15,7 @@
             android:id="@+id/img_blog_thumbnail"
             android:background="@drawable/bg_book_item"
             android:scaleType="centerCrop"
-            android:layout_width="125dp"
+            android:layout_width="100dp"
             android:layout_height="100dp"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout

@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.elapp.booque.R
 import com.elapp.booque.data.entity.book.Book
@@ -60,6 +61,10 @@ class HomeFragment : Fragment(), ArticleOnClickListener, ItemListener {
 
         binding?.rvBook?.adapter = bookListAdapter
         binding?.rvBook?.layoutManager = LinearLayoutManager(context?.applicationContext, LinearLayoutManager.HORIZONTAL,false)
+
+        binding?.txLihatSelengkapnya?.setOnClickListener {
+            it.findNavController().navigate(R.id.action_homeFragment_to_bookFragment)
+        }
 
         initBanner()
 

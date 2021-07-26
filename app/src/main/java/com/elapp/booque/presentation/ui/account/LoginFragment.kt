@@ -94,7 +94,15 @@ class LoginFragment : Fragment(), LoginHandler, AuthListener {
             val email: String = acc?.email.toString()
             val photo: Uri? = acc?.photoUrl
             Timber.d("url user : $photo")
-            formViewModel.oauthLogin(email)
+            formViewModel.oauthLogin(email).observe(this, Observer { user ->
+                context?.applicationContext?.let { con ->
+                    SessionManager(con).saveOAuth(user.data, email)
+                    val intent = Intent(context?.applicationContext, MainActivity::class.java)
+                    startActivity(intent)
+                    requireActivity().finish()
+                    Timber.d("Activity finished")
+                }
+            })
             formViewModel.loginNetworkState.observe(viewLifecycleOwner, Observer {
                 when (it) {
                     NetworkState.LOADING -> {
@@ -119,18 +127,22 @@ class LoginFragment : Fragment(), LoginHandler, AuthListener {
     }
 
     override fun onLoginClicked(view: View) {
-        formViewModel.loginRequest(
-            binding?.edtEmail?.text.toString(),
-            binding?.edtPassword?.text.toString()
-        ).observe(this, Observer { user ->
-            context?.applicationContext?.let { con ->
-                SessionManager(con).saveOAuth(user.data, binding?.edtEmail?.text.toString())
-                val intent = Intent(context?.applicationContext, MainActivity::class.java)
-                startActivity(intent)
-                requireActivity().finish()
-                Timber.d("Activity finished")
-            }
-        })
+        if (binding?.edtEmail?.text.isNullOrEmpty() || binding?.edtPassword?.text.isNullOrEmpty()) {
+            Toast.makeText(context?.applicationContext, "Masukkan username/password terlebih dahulu", Toast.LENGTH_SHORT).show()
+        } else {
+            formViewModel.loginRequest(
+                binding?.edtEmail?.text.toString(),
+                binding?.edtPassword?.text.toString()
+            ).observe(this, Observer { user ->
+                context?.applicationContext?.let { con ->
+                    SessionManager(con).saveOAuth(user.data, binding?.edtEmail?.text.toString())
+                    val intent = Intent(context?.applicationContext, MainActivity::class.java)
+                    startActivity(intent)
+                    requireActivity().finish()
+                    Timber.d("Activity finished")
+                }
+            })
+        }
         formViewModel.loginNetworkState.observe(viewLifecycleOwner, Observer {
             when (it) {
                 NetworkState.LOADING -> {

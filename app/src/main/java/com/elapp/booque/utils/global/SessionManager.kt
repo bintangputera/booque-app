@@ -42,8 +42,8 @@ class SessionManager(context: Context) {
         editor.putString(KEY_FULL_NAME, fullName)
         editor.putString(KEY_ADDRESS, address)
         editor.putString(KEY_PHONE, phone)
-        editor.putString(KEY_CITY_ID, cityId.toString())
-        editor.putString(KEY_PROVINCE_ID, provinceId.toString())
+        editor.putInt(KEY_CITY_ID, cityId)
+        editor.putInt(KEY_PROVINCE_ID, provinceId)
         editor.apply()
     }
 

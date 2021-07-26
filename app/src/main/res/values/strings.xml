@@ -85,6 +85,14 @@
     <string name="hubungi_booqer">Hubungi Booqer</string>
     <string name="barcode_akun">Barcode Akun</string>
     <string name="scan_barcode_dibawah_ini">Scan barcode dibawah ini</string>
+    <string name="sumbangkan_buku">Sumbangkan Buku</string>
+    <string name="scan_barcode_penerima">Scan Barcode Penerima</string>
+    <string name="kalian_bisa_cek_barcode_di_halaman_profile_dan_pilih_tombol_barcode_akun">Kalian bisa cek barcode di halaman profile dan pilih tombol Barcode Akun</string>
+    <string name="konfirmasi">Konfirmasi</string>
+    <string name="upload_bukti_berupa_foto">Upload bukti berupa foto</string>
+    <string name="berhasil">Berhasil</string>
+    <string name="riwayat_transaksi">Riwayat Transaksi</string>
+    <string name="buku_sudah_di_ambil">Buku sudah di ambil</string>
     <string-array name="category_list">
         <item>Novel</item>
         <item>Komik</item>

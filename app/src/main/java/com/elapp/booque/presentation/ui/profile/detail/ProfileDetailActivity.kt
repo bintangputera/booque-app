@@ -76,10 +76,8 @@ class ProfileDetailActivity : AppCompatActivity() {
         if (result.resultCode == Activity.RESULT_OK) {
             val intent = result.data
             provinceId = intent?.getIntExtra("province_id", 0)!!
-            Toast.makeText(this, "Province id : $provinceId", Toast.LENGTH_SHORT).show()
             provinceName = SessionManager(this).provinceName.toString()
             binding?.edtProvinsi?.setText(provinceName)
-            Toast.makeText(this, "Id terparsed : $provinceId dan Nama $provinceName", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -87,7 +85,6 @@ class ProfileDetailActivity : AppCompatActivity() {
         if (result.resultCode == Activity.RESULT_OK) {
             val intent = result.data
             cityId = intent?.getIntExtra("city_id", 0)!!
-            Toast.makeText(this, "City Id : $cityId", Toast.LENGTH_SHORT).show()
             cityName = SessionManager(this).cityName.toString()
             binding?.edtKota?.setText(cityName)
         }

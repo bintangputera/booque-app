@@ -3,6 +3,7 @@ package com.elapp.booque.data.service.book
 import com.elapp.booque.data.entity.response.book.ResponseBuku
 import com.elapp.booque.data.entity.response.book.Category
 import com.elapp.booque.data.entity.response.book.ResponseDetailBuku
+import com.elapp.booque.data.entity.response.book.ResponseTransaksi
 import com.google.gson.annotations.SerializedName
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -31,6 +32,11 @@ interface BookService {
 
     @GET("api/v1/semua-category")
     fun getAllCategories(): Single<List<Category>>
+
+    @POST("api/v1/transaksi-ku/{id}")
+    fun getAllTransaksi(
+        @Path("id") id: Int
+    ): Single<ResponseTransaksi>
 
     @POST("api/v1/update-buku/{id}")
     @FormUrlEncoded

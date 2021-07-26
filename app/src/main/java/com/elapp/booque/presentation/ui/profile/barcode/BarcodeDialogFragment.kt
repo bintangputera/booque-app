@@ -46,7 +46,6 @@ class BarcodeDialogFragment : androidx.fragment.app.DialogFragment() {
         userId = requireArguments().getString("user_id", null)
 
         val userId2 = SessionManager(requireContext()).userId.toString()
-        Toast.makeText(context?.applicationContext, userId2, Toast.LENGTH_SHORT).show()
 
         if (userId2.isNotEmpty()) {
             val manager: WindowManager = activity?.getSystemService(Context.WINDOW_SERVICE) as WindowManager

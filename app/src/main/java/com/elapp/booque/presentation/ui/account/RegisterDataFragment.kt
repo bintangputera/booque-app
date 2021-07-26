@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import com.elapp.booque.databinding.FragmentRegisterDataBinding
 import com.elapp.booque.presentation.ui.account.handler.RegisterHandler
 import com.elapp.booque.presentation.ui.account.handler.RegisterListener
@@ -80,7 +81,6 @@ class RegisterDataFragment : Fragment(), RegisterListener, RegisterHandler {
     }
 
     override fun onRegisterClicked(view: View) {
-        Toast.makeText(context?.applicationContext, "Button ditekan", Toast.LENGTH_SHORT).show()
         registerViewModel.registerRequest(
             binding?.edtEmail?.text.toString(),
             binding?.edtPassword?.text.toString(),
@@ -89,15 +89,29 @@ class RegisterDataFragment : Fragment(), RegisterListener, RegisterHandler {
         )
         registerViewModel.networkState.observe(viewLifecycleOwner, Observer {
             when (it) {
-                NetworkState.LOADING -> Toast.makeText(context?.applicationContext, "Proses Register", Toast.LENGTH_SHORT).show()
-
-                NetworkState.LOADED -> Toast.makeText(context?.applicationContext, "Register Berhasil", Toast.LENGTH_SHORT).show()
+                NetworkState.LOADED -> {
+                    isLoading(false)
+                    view.findNavController().popBackStack()
+                }
+                NetworkState.LOADING -> {
+                    isLoading(true)
+                }
             }
         })
     }
 
     override fun onGoogleButtonClicked(view: View) {
         /* Nothing to do */
+    }
+
+    private fun isLoading(status: Boolean) {
+        if (!status) {
+            binding?.progressLogin?.visibility = View.GONE
+            binding?.backgroundDim?.visibility = View.GONE
+        } else {
+            binding?.progressLogin?.visibility = View.VISIBLE
+            binding?.backgroundDim?.visibility = View.VISIBLE
+        }
     }
 
 }

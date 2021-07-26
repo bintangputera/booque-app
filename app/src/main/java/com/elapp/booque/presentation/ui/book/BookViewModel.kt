@@ -7,6 +7,7 @@ import androidx.paging.PagedList
 import androidx.paging.PagingData
 import com.elapp.booque.data.entity.book.Book
 import com.elapp.booque.data.entity.response.book.Category
+import com.elapp.booque.data.entity.transaction.Transaksi
 import com.elapp.booque.data.repository.BookRepository
 import com.elapp.booque.presentation.ui.book.listener.BookListener
 import com.elapp.booque.utils.network.NetworkState
@@ -37,6 +38,18 @@ class BookViewModel(
     ): LiveData<PagingData<Book>> {
         val result = MutableLiveData<PagingData<Book>>()
         compositeDisposable.add(bookRepository.requestDataListBukuku(userId).subscribe(
+            {
+                result.postValue(it)
+            }, {
+                Timber.e("Error occured : ${it.message}")
+            }
+        ))
+        return result
+    }
+
+    fun getListTransaksi(userId: Int): LiveData<PagingData<Transaksi>> {
+        val result = MutableLiveData<PagingData<Transaksi>>()
+        compositeDisposable.add(bookRepository.requestListTransaksi(userId).subscribe(
             {
                 result.postValue(it)
             }, {
